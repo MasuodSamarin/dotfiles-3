@@ -1,0 +1,42 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's STM8 Microcntroller Programmer Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+echo
+echo " Installing Latest version of stm8flash"
+echo
+
+# Get Current Directory
+export CPWD="$(pwd)"
+
+# Change to Temp
+cd /tmp
+
+# Get the Package
+git clone https://github.com/vdudouyt/stm8flash
+cd stm8flash
+
+# Build Package as Root
+sudo make
+sudo cp stm8flash /usr/local/bin/
+
+# Perfrom Clean-up
+cd ..
+sudo rm -rf stm8flash
+
+# Return
+cd $CPWD
+
+echo
+echo " Done...!"
+echo

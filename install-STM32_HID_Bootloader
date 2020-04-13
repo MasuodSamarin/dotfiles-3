@@ -1,0 +1,45 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's STM32 Microcntroller Boot-loader programmer Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+echo
+echo " Installing Latest version of STM32 HID Bootloader"
+echo
+
+# Get Current Directory
+export CPWD="$(pwd)"
+
+# Change to Temp
+cd /tmp
+
+# Get the Package
+git clone https://github.com/Serasidis/STM32_HID_Bootloader.git
+cd STM32_HID_Bootloader/cli
+
+# Build Package as Root
+sudo make
+sudo chmod +x hid-flash
+sudo cp hid-flash /usr/local/bin/
+
+# Perfrom Clean-up
+cd ../..
+rm -rf STM32_HID_Bootloader
+
+# Return
+cd $CPWD
+
+echo
+echo " Done...!"
+echo
+
+

@@ -1,0 +1,58 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+###########################################
+### Typescript Workspace Execution Program
+###
+### @brief Runs the Typescript files with NodeJS
+###
+### @version 
+version=" v1.0 - First Revision"
+###
+### @author Abhijit Bose <boseji@users.noreply.github.com>
+###
+### @license : 
+### Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+###
+###    SPDX-License-Identifier: GPL-2.0-only
+###
+###    This program is part of the TypeScript learning efforts
+###    by the Author.
+###
+###########################################
+echo
+echo "  @@ TypeScript Workspace Execution Program @@"
+echo "------------------------------------------------"
+echo
+## Get the File name Parameter
+flname="$1"
+if [ "$flname" == "" ];then
+    echo
+    echo "  No filename provided assuming 'app.js' is the file ;-)"
+    flname="app.js"
+fi
+## For Help
+if [[ $flname == "-h" || $flname == "?" || $flname == "--help" ]]; then
+    echo
+    echo " Usage: "
+    echo
+    echo "   tsx <fileNameWithoutExtention>"
+    echo
+    echo "      Where -"
+    echo "           <fileNameWithoutExtention> : Is the main Executable file"
+    echo "           of the project"
+    echo
+    exit 0
+fi
+## For Version
+if [[ $flname == "-v" || $flname == "version" || $flname == "--version" ]]; then
+    echo -e $version
+    exit 0
+fi
+echo
+if [ "`tsc`" == "" ];then 
+    node $flname
+else 
+    tsc || exit 1
+fi
+

@@ -1,0 +1,30 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's docker based GCP gcloud tool Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+#if [[ ! -d "$HOME/.gcp_credentials" ]];then
+#dgcloud-login
+#fi
+
+#docker run --rm -ti \
+#	-e CLOUDSDK_CONFIG=/config/gcloud \
+#	-v $HOME/.gcp_credentials/gcloud:/config/gcloud \
+#	-v $HOME/.gcp_credentials/certs:/certs \
+#	-v "$(pwd)":/src \
+#	-w /src \
+#	-p 8000:8000 \
+#	-p 8080:8080 \
+#	-p 25000:25000 \
+#	google/cloud-sdk gcloud $@
+
+dgci gcloud $@

@@ -1,0 +1,45 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's ATmega32U Microcntroller Programmer Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+echo
+echo " Installing Latest version of leonardoUploader"
+echo
+
+# Get Current Directory
+export CPWD="$(pwd)"
+
+# Change to Temp
+cd /tmp
+
+# Get the Package
+git clone https://github.com/vanbwodonk/leonardoUploader
+cd leonardoUploader/linux
+
+# Build Package as Root
+sudo make
+sudo chmod +x leonardoUploader
+sudo cp leonardoUploader /usr/local/bin/
+
+# Perfrom Clean-up
+cd ../..
+rm -rf leonardoUploader
+
+# Return
+cd $CPWD
+
+echo
+echo " Done...!"
+echo
+
+

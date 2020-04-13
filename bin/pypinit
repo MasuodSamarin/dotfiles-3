@@ -1,0 +1,173 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+###########################################
+### Python Workspace Startup File
+###
+### @brief Creates the Required files and configuration needed
+### to begin working with Python projects
+###  This work has been inspired by:
+###     Learn Python the Hard Way by Zed A Shaw
+###   - Great book on python and other topics
+###   - Visit: https://learnpythonthehardway.org/
+###
+### @note This project setup depends on nose2 and coverage refer
+###        their respective documentation:
+###        - https://docs.nose2.io/en/latest/
+###        - https://coverage.readthedocs.io/
+###
+### @version 1.1 - Fixed setup generation 
+###			 1.0 - First Revision with `nose2 and Coverage` 
+###
+### @author Abhijit Bose <boseji@users.noreply.github.com>
+###
+### @license : 
+### Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+###
+###    SPDX-License-Identifier: GPL-2.0-only
+###
+###    This program is part of the Python learning efforts
+###    by the Author.
+###
+###########################################
+## Exit on Error
+set -e
+## Obtain all Parameters
+export PROJECT=$1
+export CWD=`pwd`
+## Accept the Name of Project
+if [ -z "$PROJECT" ];then
+  export PROJECT="NAME"
+fi
+## Begin Creation
+echo
+echo "----------------------------------------------------------"
+echo " Creating $PROJECT in : $CWD"
+echo
+echo "  ~ Inspired by 'Learn Python the Hard Way by Zed A. Shaw"
+echo "----------------------------------------------------------"
+echo
+echo "  - Creating directories: bin, $PROJECT, tests, docs"
+mkdir -p bin $PROJECT tests docs
+echo
+echo "  - Here is how the directory looks like:"
+echo
+ls -al
+echo
+echo "  - Creating the required files"
+echo "      + Init Files: $PROJECT/__init__.py, tests/__init__.py"
+touch $PROJECT/__init__.py
+touch tests/__init__.py
+echo "      + Setup File: setup.py"
+cat > setup.py <<EOF1
+#!/usr/bin/python
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+config = [
+    "description": "My Project",
+    "author": "My Name",
+    "url": "URL to get it at.",
+    "download_url": "Where to download it.",
+    "author_email": "My Email",
+    "version": "0.1",
+    "install_requires": ["nose2","coverage"],
+    "packages": ["${PROJECT}"],
+    "scripts": [],
+    "name": "${PROJECT}"
+]
+
+setup(**config)
+EOF1
+
+echo "      + Basic Test Cases: tests/test_$PROJECT.py"
+
+cat > tests/test_$PROJECT.py <<EOF2
+#!/usr/bin/python
+import unittest
+
+class TestSet(unittest.TestCase):
+    def setUp(self):
+        print("Setup for Tests")
+    def tearDown(self):
+        print("Teardown for Tests")
+    def test_basic(self):
+        print(" Basic Test Case Ran!")
+
+if __name__ == "__main__":
+    unittest.main()
+EOF2
+
+echo "      + GitIgnore File: .gitignore"
+
+cat > .gitignore <<EOF3
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Libre Office
+.~lock.*.*
+EOF3
+ 
+echo
+echo "  - Here is how the directory looks like:"
+echo
+ls -alR
+echo
+echo "----------------------------------------------------------"
+echo " Done !  - good luck with your project ;-)"
+echo

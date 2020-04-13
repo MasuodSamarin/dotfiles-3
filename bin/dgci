@@ -1,0 +1,38 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's docker based GCP Master Command Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+# Ensure that we have the credentials initialized
+if [[ ! -d "$HOME/.gcp_credentials" ]];then
+	dgcloud-login
+fi
+
+# Get Image if not Installed
+export gcpi="google/cloud-sdk"
+export IMAGES="$(sudo docker images --filter=reference='${gcpi}*:*' | grep '${gcpi}' | awk '{print $1}')"
+
+if [ -z "$IMAGES" ] ; then
+	sudo docker pull $gcpi
+fi
+
+# Command Cradle
+docker run --rm -ti \
+	-e CLOUDSDK_CONFIG=/config/gcloud \
+	-v $HOME/.gcp_credentials/gcloud:/config/gcloud \
+	-v $HOME/.gcp_credentials/certs:/certs \
+	-v "$(pwd)":/src \
+	-w /src \
+	-p 8000:8000 \
+	-p 8080:8080 \
+	-p 25000:25000 \
+	google/cloud-sdk $@

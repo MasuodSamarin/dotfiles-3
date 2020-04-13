@@ -1,0 +1,87 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Arch / Manjaro Linux user Profile Creation Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+# Get Current Directory
+export CPWD="$(pwd)"
+
+# Make sure we are in correct directory
+export pDIR="$(cd "$(dirname "$0")" && pwd)"
+cd $pDIR
+
+export ubuntu="$(cat /etc/issue | grep Ubuntu)"
+export manjaro="$(cat /etc/issue | grep Manjaro)"
+
+if [ ! -z "$manjaro" ] ; then
+
+    # cp -r originals-manjaro $HOME
+    echo
+    echo "Manjaro OS found"
+    echo
+
+elif [ ! -z "$ubuntu" ] ; then
+
+    # cp -r originals-ubuntu $HOME
+    echo
+    echo "Ubuntu OS found"
+    echo
+else
+    
+    echo
+    echo " Un-known Linux Distro "
+    echo
+    exit 1
+
+fi
+
+# Copy Files
+cp ./bash.aliases.sh $HOME/bash.aliases
+cp ./bash.exports.sh $HOME/bash.exports
+cp ./gitconfig.toml $HOME/.gitconfig
+cp ./tmux.conf.sh $HOME/.tmux.conf
+cp ./hyper.js $HOME/.hyper.js
+
+# Run Other installs
+bash ./install-bin
+
+# Bashrc customization
+export custom="$(cat $HOME/.bashrc | grep Boseji)"
+if [ -z "$custom" ] ; then
+echo '
+
+####
+## Boseji s Bash Customization
+####
+[[ -e "$HOME/bash.aliases" ]] && source $HOME/bash.aliases
+[[ -e "$HOME/bash.exports" ]] && source $HOME/bash.exports
+
+' >> $HOME/.bashrc
+fi
+
+# Golang Directory Fix
+if [[ ! -d "$HOME/go/src" ]] ; then
+    mkdir -p $HOME/go/src $HOME/go/bin
+    echo
+    tree $HOME/go
+fi
+
+# Update the Current Profile
+[[ -e "$HOME/.profile" ]] && source $HOME/.profile 
+[[ -e "$HOME/.bash_profile" ]] && source $HOME/.bash_profile
+
+# Done
+cd $CPWD
+
+echo
+echo " Done...!"
+echo

@@ -1,0 +1,16 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Node-js (Typescript) Directory cleaning script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+if [ -d "node_modules" ] ; then
+    rm -rf package-lock.json node_modules
+fi

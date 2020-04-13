@@ -1,0 +1,44 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's HUGO static website generator Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+#
+# Attribution to Source :
+#
+## https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8
+#
+
+echo
+echo Donloading Latest version of Hugo ...
+echo
+# Get th Latest File
+curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest \
+	| grep "_Linux-64bit.tar.gz" \
+	| grep "extended" \
+	| cut -d : -f 2,3 \
+	| tr -d \" \
+	| wget -qi -
+
+# Extract
+mkdir /tmp/hugo
+sudo tar -xf hugo_extended_*_Linux-64bit.tar.gz -C /tmp/hugo
+
+# Copy File
+sudo cp /tmp/hugo/hugo /usr/local/bin
+sudo rm -rf /tmp/hugo
+
+# Clean up
+rm hugo_extended_*_Linux-64bit.tar.gz
+
+echo
+echo " Done...!"
+echo

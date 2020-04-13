@@ -1,0 +1,26 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Serial port Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+####
+# Command Format :
+# 
+# Example:  
+# serial 9600 /dev/ttyUSB0
+# 
+#  - becomes
+#    >  picocom -b 9600 --imap lfcrlf /dev/ttyUSB0
+#
+####
+picocom -b ${1-9600} --imap lfcrlf ${2-/dev/ttyUSB0}
+

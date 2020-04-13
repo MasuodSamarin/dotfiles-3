@@ -1,0 +1,61 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Arch Linux AUR Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+# Commandline Parameters
+export package=$1
+export packageurl=$2
+export packagestr=$3
+
+echo
+echo " Installing Latest version of ${packagestr}"
+echo
+
+# Get Current Directory
+export CPWD="$(pwd)"
+
+# Change to Temp
+cd /tmp
+
+# Remove the Older Package
+echo
+echo " Removing older package... (if any)"
+echo
+[ ! -z "$(sudo pacman -Qe | grep ${package})" ] && sudo pacman -Rc $package
+
+
+echo
+echo " Getting Latest sources.... of ${package}"
+echo
+
+# Exit on Error returned
+set -e
+
+# Get the Package
+git clone $packageurl $package
+cd $package
+
+# Install
+makepkg -si
+
+# Perfrom Clean-up
+cd ..
+rm -rf $package
+
+# Return
+cd $CPWD
+
+echo
+echo " Done...!"
+echo
+

@@ -1,0 +1,27 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Command History cleaning Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+history -c
+
+source $HOME/.profile
+[[ -e "$HOME/.bash_profile" ]] && source $HOME/.bash_profile
+
+if [ -e "$HOME/.bash_history" ];then
+    rm -rf $HOME/.bash_history
+fi
+if [ -e "$HOME/.python_history" ];then
+    rm -rf $HOME/.python_history
+fi
+
+history -c

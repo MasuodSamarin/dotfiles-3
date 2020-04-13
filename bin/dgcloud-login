@@ -1,0 +1,45 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's docker based GCP Initialization Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+# Get Image if not Installed
+export gcpi="google/cloud-sdk"
+export IMAGES="$(sudo docker images --filter=reference='${gcpi}*:*' | grep '${gcpi}' | awk '{print $1}')"
+
+if [ -z "$IMAGES" ] ; then
+	sudo docker pull $gcpi
+fi
+
+# Setup the Credentials if not present
+if [[ ! -d "$HOME/.gcp_credentials" ]];then
+echo
+echo "Creating Login Credential Folder for Google Cloud Platform"
+echo
+
+mkdir -p $HOME/.gcp_credentials/gcloud
+mkdir -p $HOME/.gcp_credentials/certs
+echo
+docker run --rm -ti \
+	-e CLOUDSDK_CONFIG=/config/gcloud \
+	-v $HOME/.gcp_credentials/gcloud:/config/gcloud \
+	-v $HOME/.gcp_credentials/certs:/certs \
+	google/cloud-sdk \
+	gcloud auth login
+echo
+else
+echo
+echo "Google Cloud already Logged-In"
+echo
+fi
+
+
