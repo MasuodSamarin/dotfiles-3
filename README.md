@@ -1,10 +1,14 @@
 # [Boseji's](https://github.com/boseji) dotfiles - Linux configuration files
 
+![dotfiles banner](dotfiles.png)
+
 This repository contains various scripts and configuration files -
 for the Linux distribution used by [@boseji](https://github.com/boseji) .
 
 Note: The artifact are highly opinionated and specific to 
 [@boseji's](https://boseji.com) liking.
+
+In short this is more inclined towards [**Manjaro Linux** (Arch Linux)](https://manjaro.org/).
 
 ## Installation
 
@@ -26,6 +30,19 @@ cd && git clone https://github.com/boseji/dotfiles.git && \
 ./install-hugo
 
 ```
+
+## Try Out
+
+If you wish to try out the shortcuts before installing - Try this:
+
+```shell
+# cd to the location containing the 'dotfiles' repository
+source ./bash.aliases.sh
+source ./bash.exports.sh
+```
+
+All the `install-*` scripts are self contained.
+They too can be run independently.
 
 ## License
 
