@@ -19,9 +19,15 @@ In short this is more inclined towards [**Manjaro Linux** (Arch Linux)](https://
 
 ```shell
 # Clone and Initialize
-cd && git clone https://github.com/boseji/dotfiles.git && \
-    cd dotfiles && ./install-packages \
-    && ./install-bin && ./install-profile
+cd 
+git clone https://github.com/boseji/dotfiles.git
+cd dotfiles
+# Install required Packages
+./install-packages
+# Initialize the Local scripts
+./install-bin 
+# Initialize the local Profile
+./install-profile
 ...
 # Optionally run other install scripts
 ...
@@ -30,6 +36,19 @@ cd && git clone https://github.com/boseji/dotfiles.git && \
 ./install-hugo
 
 ```
+
+### Force Initialization for Profile
+
+In case if you have messed up something with `.bashrc` or profile options in general
+then use the `-f` in the `install-profile` script.
+
+```shell
+# Initialize the local Profile with Force restore
+./install-profile -f
+```
+
+This would restore the original files first.
+Then it would apply the profile changes.
 
 ## Try Out
 

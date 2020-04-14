@@ -70,9 +70,15 @@ rsynci()
     local fl=$1
     # Create the file if it does not exist
     if [[ ! -e "$HOME/.rsyncignore" ]] ; then
+        echo
+        echo "   Created Rsync Ignore File"
+        echo
         touch $HOME/.rsyncignore
     fi
     if [[ -z "$(cat $HOME/.rsyncignore | grep ${fl})" ]] ; then
+        echo
+        echo "   Rsync Ignore configured for ${fl}"
+        echo
         echo "${fl}" >> $HOME/.rsyncignore
     fi
 }
