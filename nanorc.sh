@@ -1,3 +1,13 @@
+####
+##
+## Boseji's Nano Config
+##
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
 include "/usr/share/nano-syntax-highlighting/*.nanorc"
 # Eable Line Numbers
 set linenumbers
