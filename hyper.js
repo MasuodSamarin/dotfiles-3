@@ -1,4 +1,5 @@
 ////////
+//
 // Boseji's Custom HYPER.js Terminal Config
 //
 //
