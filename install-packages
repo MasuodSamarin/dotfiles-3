@@ -21,7 +21,7 @@ sudo pacman -Syu
 # Packages - System
 sudo pacman -S htop tree lbzip2 hddtemp lm_sensors \
 	virtualbox linux54-virtualbox-host-modules virtualbox-guest-iso \
-	bash-completion docker tmux arch-audit fakeroot patch
+	bash-completion docker tmux arch-audit fakeroot patch grsync
 
 # Packages - Security
 sudo pacman -S keepassxc veracrypt libgcrypt
