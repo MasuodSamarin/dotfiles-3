@@ -24,17 +24,21 @@ export manjaro="$(cat /etc/issue | grep Manjaro)"
 
 if [ ! -z "$manjaro" ] ; then
 
-    # cp -r originals-manjaro $HOME
     echo
     echo "Manjaro OS found"
     echo
+    echo "   Copying files"
+    echo
+    /bin/cp -v -- ./originals-manjaro/.* $HOME
 
 elif [ ! -z "$ubuntu" ] ; then
 
-    # cp -r originals-ubuntu $HOME
     echo
     echo "Ubuntu OS found"
     echo
+    echo "   Copying files"
+    echo
+    # /bin/cp -v -- ./originals-ubuntu/.* $HOME
 else
     
     echo
@@ -44,19 +48,29 @@ else
 
 fi
 
+echo
+echo "   Copying other profile files"
+echo
 # Copy Files
-cp ./bash.aliases.sh $HOME/bash.aliases
-cp ./bash.exports.sh $HOME/bash.exports
-cp ./gitconfig.toml $HOME/.gitconfig
-cp ./tmux.conf.sh $HOME/.tmux.conf
-cp ./hyper.js $HOME/.hyper.js
+/bin/cp -v ./bash.aliases.sh $HOME/bash.aliases
+/bin/cp -v ./bash.exports.sh $HOME/bash.exports
+/bin/cp -v ./gitconfig.toml $HOME/.gitconfig
+/bin/cp -v ./tmux.conf.sh $HOME/.tmux.conf
+/bin/cp -v ./hyper.js $HOME/.hyper.js
 
+echo
+echo "   Running the Bin directory Installation"
+echo
 # Run Other installs
 bash ./install-bin
 
 # Bashrc customization
 export custom="$(cat $HOME/.bashrc | grep Boseji)"
 if [ -z "$custom" ] ; then
+echo
+echo "   Perform .bashrc customization"
+echo
+
 echo '
 
 ####
@@ -70,6 +84,9 @@ fi
 
 # Golang Directory Fix
 if [[ ! -d "$HOME/go/src" ]] ; then
+    echo
+    echo "   Adding Golang directories"
+    echo
     mkdir -p $HOME/go/src $HOME/go/bin
     echo
     tree $HOME/go
