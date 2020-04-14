@@ -13,7 +13,10 @@
 ####
 
 if [[ ! -d "$HOME/bin" ]] ; then
+	echo
+	echo "    Creating Bin directory in HOME"
+	echo
     mkdir -p $HOME/bin
 fi
 
-cp -r ./bin $HOME
+cp -v -r ./bin $HOME

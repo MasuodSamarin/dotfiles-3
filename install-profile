@@ -27,7 +27,7 @@ if [ ! -z "$manjaro" ] ; then
     echo
     echo "Manjaro OS found"
     echo
-    echo "   Copying files"
+    echo "   Copying files .profile files"
     echo
     /bin/cp -v -- ./originals-manjaro/.* $HOME
 
