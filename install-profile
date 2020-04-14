@@ -27,18 +27,23 @@ if [ ! -z "$manjaro" ] ; then
     echo
     echo "Manjaro OS found"
     echo
-    echo "   Copying files .profile files"
-    echo
-    /bin/cp -v -- ./originals-manjaro/.* $HOME
+    if [ "$1" == "-f" ]; then
+        echo "   Copying files .profile files"
+        echo
+        /bin/cp -v -- ./originals-manjaro/.* $HOME
+    fi
 
 elif [ ! -z "$ubuntu" ] ; then
 
     echo
     echo "Ubuntu OS found"
     echo
-    echo "   Copying files"
-    echo
-    # /bin/cp -v -- ./originals-ubuntu/.* $HOME
+    if [ "$1" == "-f" ]; then
+        echo "   Copying files"
+        echo
+        /bin/cp -v -- ./originals-ubuntu/.* $HOME
+    fi
+
 else
     
     echo
@@ -57,6 +62,21 @@ echo
 /bin/cp -v ./gitconfig.toml $HOME/.gitconfig
 /bin/cp -v ./tmux.conf.sh $HOME/.tmux.conf
 /bin/cp -v ./hyper.js $HOME/.hyper.js
+
+# Funciton to add files to .rsyncignore
+rsynci() 
+{
+    local fl=$1
+    if [[ -z "$(cat $HOME/.rsyncignore | grep ${fl})" ]] ; then
+        echo "${fl}" >> $HOME/.rsyncignore
+    fi
+}
+
+rsynci bash.aliases
+rsynci bash.exports
+rsynci .gitconfig
+rsynci .tmux.conf
+rsynci .hyper.js
 
 echo
 echo "   Running the Bin directory Installation"
