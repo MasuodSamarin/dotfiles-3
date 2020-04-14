@@ -62,21 +62,27 @@ echo
 /bin/cp -v ./gitconfig.toml $HOME/.gitconfig
 /bin/cp -v ./tmux.conf.sh $HOME/.tmux.conf
 /bin/cp -v ./hyper.js $HOME/.hyper.js
+/bin/cp -v ./nanorc.sh $HOME/.nanorc
 
 # Funciton to add files to .rsyncignore
 rsynci() 
 {
     local fl=$1
+    # Create the file if it does not exist
+    if [[ ! -e "$HOME/.rsyncignore" ]] ; then
+        touch $HOME/.rsyncignore
+    fi
     if [[ -z "$(cat $HOME/.rsyncignore | grep ${fl})" ]] ; then
         echo "${fl}" >> $HOME/.rsyncignore
     fi
 }
-
+# Add ignore for the files not needing backup
 rsynci bash.aliases
 rsynci bash.exports
 rsynci .gitconfig
 rsynci .tmux.conf
 rsynci .hyper.js
+rsynci .nanorc
 
 echo
 echo "   Running the Bin directory Installation"
