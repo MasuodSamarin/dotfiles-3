@@ -19,6 +19,10 @@ if [ "$TERM" != "xterm-256color" ]; then
 	export TERM=xterm-256color
 fi
 
+# Identify the OS
+export ubuntu="$(cat /etc/issue | grep Ubuntu)"
+export manjaro="$(cat /etc/issue | grep Manjaro)"
+
 ## Path Config
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=/usr/bin/nano

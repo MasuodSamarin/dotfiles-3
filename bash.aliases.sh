@@ -122,19 +122,19 @@ if [ $UID -ne 0 ]; then
 fi
 
 # Docker Shortcuts
-edls='docker ps -a'
-edlsi='docker images '
-edpull='docker pull '
-edrm='docker rm -f '
-edrmi='docker rmi '
-edr='docker run --rm '
-edrr='docker run '
-edclean='docker ps -aq | xargs docker rm -rf'
-edcleani='docker rmi $(docker images -f "dangling=true" -q)'
+edls='docker container ls -a'
+edlsi='docker image ls -a '
+edpull='docker image pull '
+edrm='docker container rm -f '
+edrmi='docker image rmi '
+edr='docker container run --rm '
+edrr='docker container run '
+edclean='docker container ls -aq | xargs docker rm -rf'
+edcleani='docker image rmi $(docker image ls -f "dangling=true" -q)'
 
 # Docker Golang
-edgo='docker run --rm -v "$PWD":/go/src -w /go/src golang go '
-egoi='docker run --rm -it -v "$PWD":/go/src -w /go/src golang bash '
+edgo='docker container run --rm -v "$PWD":/go/src -w /go/src golang go '
+egoi='docker container run --rm -it -v "$PWD":/go/src -w /go/src golang bash '
 
 # If user is not member of Docker Group
 if [ -z "$(cat /etc/group | grep docker | grep $USER)" ]; then

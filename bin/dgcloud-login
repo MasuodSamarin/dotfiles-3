@@ -14,10 +14,10 @@
 
 # Get Image if not Installed
 export gcpi="google/cloud-sdk"
-export IMAGES="$(sudo docker images --filter=reference='${gcpi}*:*' | grep '${gcpi}' | awk '{print $1}')"
+export IMAGES="$(sudo docker image ls -a --filter=reference='${gcpi}*:*' | grep '${gcpi}' | awk '{print $1}')"
 
 if [ -z "$IMAGES" ] ; then
-	sudo docker pull $gcpi
+	sudo docker image pull $gcpi
 fi
 
 # Setup the Credentials if not present
@@ -29,7 +29,7 @@ echo
 mkdir -p $HOME/.gcp_credentials/gcloud
 mkdir -p $HOME/.gcp_credentials/certs
 echo
-docker run --rm -ti \
+docker container run --rm -ti \
 	-e CLOUDSDK_CONFIG=/config/gcloud \
 	-v $HOME/.gcp_credentials/gcloud:/config/gcloud \
 	-v $HOME/.gcp_credentials/certs:/certs \
