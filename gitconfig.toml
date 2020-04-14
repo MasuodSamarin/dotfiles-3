@@ -39,8 +39,9 @@
   # always setup 'git pull' to rebase instead of merge
   autosetuprebase = always
 # Special inclusion for the `go get` commands targeted to own repos
-[url "git@github.com:boseji/"]
-	insteadOf = https://github.com/boseji/
+# - This is now a legacy since Go Mod commands
+# [url "git@github.com:boseji/"]
+	# insteadOf = https://github.com/boseji/
 [alias]
   	st = status
 	ci = commit
