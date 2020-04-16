@@ -71,7 +71,7 @@ set -g status-justify centre
 
 # IP Address on Left Side
 set -g status-left-length 68
-set -g status-left "#[fg=colour11]#(ip addr show|grep -v docker|grep -v tun0|grep 'inet '|grep -v 127.0.0.1|awk '{print \"Local \" $2}'|cut -d '/' -f 1)#[fg=colour14]#(ip addr show|grep docker|grep 'inet '|grep -v 127.0.0.1| awk '{print \"|Docker \" $2}'|cut -d '/' -f 1)#[fg=colour48]#(ip addr show|grep tun0|grep 'inet '|awk '{print \"|VPN \" $2}'|cut -d '/' -f 1)#(ip addr show|grep ppp0|grep 'inet '|awk '{print \"|VPN-PPP \" $2}'|cut -d '/' -f 1)"
+set -g status-left "#[fg=colour11]#(ip addr show | grep -v docker | grep -v tun0 | grep -v \"br-\" | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \"Local \" $2}' | cut -d '/' -f 1)#[fg=colour14]#(ip addr show|grep docker|grep 'inet '|grep -v 127.0.0.1| awk '{print \"|Docker \" $2}'|cut -d '/' -f 1)#[fg=colour48]#(ip addr show|grep tun0|grep 'inet '|awk '{print \"|VPN \" $2}'|cut -d '/' -f 1)#(ip addr show|grep ppp0|grep 'inet '|awk '{print \"|VPN-PPP \" $2}'|cut -d '/' -f 1)"
 # Show session name, window & pane number, date and time on right side of status bar
 set -g status-right-length 68
 set -g status-right "#[fg=colour87]\[#S\]#I:#P|#[fg=yellow]%d %b %Y|#[fg=green]%l:%M %p"
