@@ -18,7 +18,7 @@
 #
 
 echo
-echo Donloading Latest version of Hugo ...
+echo Downloading Latest version of Hugo ...
 echo
 # Get th Latest File
 curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest \

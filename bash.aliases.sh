@@ -124,6 +124,7 @@ fi
 # Docker Shortcuts
 edls='docker container ls -a'
 edlsi='docker image ls -a '
+edlsn='docker network ls'
 edpull='docker image pull '
 edrm='docker container rm -f '
 edrmi='docker image rmi '
@@ -142,12 +143,13 @@ if [ -z "$(cat /etc/group | grep docker | grep $USER)" ]; then
     # Docker Shortcuts
     alias dls="sudo $edls"
     alias dlsi="sudo $edlsi"
+    alias dlsn="sudo $edlsn"
     alias dpull="sudo $edpull"
     alias drm="sudo $edrm"
     alias drmi="sudo $edrmi"
     alias dr="sudo $edr"
     alias drr="sudo $edrr"
-    alias dclean="sudo $eclean"
+    alias dclean="sudo docker container ls -aq | xargs sudo docker rm -f"
     alias dcleani="sudo $ecleani"
 
     # Docker Golang
@@ -157,6 +159,7 @@ else
     # Docker Shortcuts
     alias dls=$edls
     alias dlsi=$edlsi
+    alias dlsn=$edlsn
     alias dpull=$edpull
     alias drm=$edrm
     alias drmi=$edrmi
