@@ -91,7 +91,8 @@ alias vpnip='ip addr show | grep tun0 | grep "inet " | awk "{printf \"VPN %s\",\
 
 # Get List of Serial Port
 alias lserial='python3 -m serial.tools.list_ports'
-
+# Pretty print in cat
+alias catc='pygmentize -g'
 
 # For Super user Aliases
 if [ $UID -ne 0 ]; then
