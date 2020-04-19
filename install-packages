@@ -19,7 +19,7 @@ set -e
 sudo pacman -Syu
 
 # Packages - System
-sudo pacman -S htop tree lbzip2 hddtemp lm_sensors \
+sudo pacman -S htop tree lbzip2 hddtemp lm_sensors stow \
 	virtualbox linux54-virtualbox-host-modules virtualbox-guest-iso \
 	bash-completion docker tmux arch-audit fakeroot patch grsync
 
