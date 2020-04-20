@@ -110,6 +110,9 @@ echo '
 ####
 [[ -e "$HOME/bash.aliases" ]] && source $HOME/bash.aliases
 [[ -e "$HOME/bash.exports" ]] && source $HOME/bash.exports
+[[ -e "$HOME/bash_aliases" ]] && source $HOME/bash_aliases
+[[ -e "$HOME/bash_exports" ]] && source $HOME/bash_exports
+[[ -e "$HOME/digitalocean.env" ]] && source $HOME/digitalocean.env
 
 ' >> $HOME/.bashrc
 fi
@@ -123,10 +126,6 @@ if [[ ! -d "$HOME/go/src" ]] ; then
     echo
     tree $HOME/go
 fi
-
-# Update the Current Profile
-[[ -e "$HOME/.profile" ]] && source $HOME/.profile 
-[[ -e "$HOME/.bash_profile" ]] && source $HOME/.bash_profile
 
 # Done
 cd $CPWD
