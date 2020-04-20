@@ -1,0 +1,50 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's DigitalOcean CLI Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+
+
+echo
+echo Downloading Latest version of doctl ...
+echo
+
+FILECHAR="doctl-*linux-amd64.tar.gz"
+PATTERN="linux-amd64.tar.gz"
+
+# Clean Older File
+[[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+
+# Enable Error Checking
+set -e 
+
+# Get th Latest File
+curl -s https://api.github.com/repos/digitalocean/doctl/releases/latest \
+    | grep ${PATTERN} \
+    | grep "url" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | tr -d \, \
+    | wget -qi -
+
+# Extract
+mkdir /tmp/doctl
+sudo tar -xf ${FILECHAR} -C /tmp/doctl
+
+# Copy File
+sudo cp /tmp/doctl/doctl /usr/local/bin
+sudo rm -rf /tmp/doctl
+
+# Clean up
+[[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+
+echo
+echo " Done...!"
+echo
