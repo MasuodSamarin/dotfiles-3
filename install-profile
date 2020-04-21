@@ -19,6 +19,21 @@ export CPWD="$(pwd)"
 export pDIR="$(cd "$(dirname "$0")" && pwd)"
 cd $pDIR
 
+# Print Usage
+if [ "$1" == "-h" -o "$1" == "--help" ] ; then
+echo
+echo " Boseji's Arch / Manjaro Linux user Profile Creation Script"
+echo
+echo " Usage:"
+echo "   $  ./install-profile [-f]"
+echo
+echo " Where:"
+echo "   -f (optional) This flag can force over-writing the profile files."
+echo "         Means the install would overwrite '.bashrc', '.bash_profile'"
+echo "         '.profile' and '.dir_colors' files in User Home directory."
+echo
+fi
+
 export ubuntu="$(cat /etc/issue | grep Ubuntu)"
 export manjaro="$(cat /etc/issue | grep Manjaro)"
 
