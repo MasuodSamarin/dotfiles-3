@@ -1,0 +1,72 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Virtual Box Installer for Manjaro / Arch Linux
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+# Identify the OS
+ubuntu="$(cat /etc/issue | grep -i Ubuntu)"
+manjaro="$(cat /etc/issue | grep -i Manjaro)"
+
+if [[ ! -z "${manjaro}" ]] ; then
+
+echo
+echo " Manjaro Detected..."
+echo
+
+# Update Repos - with upgrade
+echo "   Updating Repos..."
+echo
+sudo pacman -Syu
+echo
+
+# Packages - System
+echo "   Installing Virtual Box..."
+echo
+sudo pacman -S virtualbox linux54-virtualbox-host-modules virtualbox-guest-iso
+echo
+
+# Install Extention Pack
+echo
+package="virtualbox-ext-oracle"
+packageurl="https://aur.archlinux.org/virtualbox-ext-oracle.git"
+packagestr="Virtual Box Extention Pack"
+./install-from-aur $package $packageurl $packagestr
+
+elif [[ ! -z "${ubuntu}" ]] ; then
+
+echo
+echo " Ubuntu Detected..."
+echo
+
+# Update Repos - with upgrade
+echo "   Updating Repos..."
+echo
+sudo apt update && sudo apt upgrade 
+echo
+
+# Packages - System
+echo "   Installing Virtual Box..."
+echo
+sudo apt install virtualbox virtualbox-ext-pack virtualbox-guest-additions-iso
+
+echo
+echo " Done...!"
+echo
+
+else
+echo
+echo " Unknown or un-impleted tools for this OS"
+echo "  - Please help us if you know"
+echo
+echo " https://github.com/boseji/dotfiles"
+echo
+fi
