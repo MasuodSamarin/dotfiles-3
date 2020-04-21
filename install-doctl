@@ -11,40 +11,46 @@
 ## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
 ##
 
-
-echo
-echo Downloading Latest version of doctl ...
-echo
-
+URL="https://api.github.com/repos/digitalocean/doctl/releases/latest"
 FILECHAR="doctl-*linux-amd64.tar.gz"
 PATTERN="linux-amd64.tar.gz"
+PROGRAM="doctl"
 
-# Clean Older File
-[[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+./install-from-github $URL $FILECHAR $PATTERN $PROGRAM
 
-# Enable Error Checking
-set -e 
+# echo
+# echo Downloading Latest version of doctl ...
+# echo
 
-# Get th Latest File
-curl -s https://api.github.com/repos/digitalocean/doctl/releases/latest \
-    | grep ${PATTERN} \
-    | grep "url" \
-    | cut -d : -f 2,3 \
-    | tr -d \" \
-    | tr -d \, \
-    | wget -qi -
+# FILECHAR="doctl-*linux-amd64.tar.gz"
+# PATTERN="linux-amd64.tar.gz"
 
-# Extract
-mkdir /tmp/doctl
-sudo tar -xf ${FILECHAR} -C /tmp/doctl
+# # Clean Older File
+# [[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
 
-# Copy File
-sudo cp /tmp/doctl/doctl /usr/local/bin
-sudo rm -rf /tmp/doctl
+# # Enable Error Checking
+# set -e 
 
-# Clean up
-[[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+# # Get th Latest File
+# curl -s https://api.github.com/repos/digitalocean/doctl/releases/latest \
+#     | grep ${PATTERN} \
+#     | grep "url" \
+#     | cut -d : -f 2,3 \
+#     | tr -d \" \
+#     | tr -d \, \
+#     | wget -qi -
 
-echo
-echo " Done...!"
-echo
+# # Extract
+# mkdir /tmp/doctl
+# sudo tar -xf ${FILECHAR} -C /tmp/doctl
+
+# # Copy File
+# sudo cp /tmp/doctl/doctl /usr/local/bin
+# sudo rm -rf /tmp/doctl
+
+# # Clean up
+# [[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+
+# echo
+# echo " Done...!"
+# echo

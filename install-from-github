@@ -1,0 +1,83 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Github Installer Install Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+#
+# Attribution to Source :
+#
+## https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8
+#
+
+URL=$1
+FILECHAR=$2
+PATTERN=$3
+PROGRAM=$4
+
+echo
+echo "Downloading Latest version of ${PROGRAM} ..."
+echo
+
+echo "Parameters:"
+echo ${URL}
+echo ${FILECHAR}
+echo ${PATTERN}
+echo ${PROGRAM}
+echo
+
+# Clean Older File
+[[ ! -z "$(ls -1 ${FILECHAR} 2>/dev/null )" ]] && rm ${FILECHAR}
+[[ ! -z "$(ls -1 /tmp/${PROGRAM} 2>/dev/null )" ]] && sudo rm -rf /tmp/${PROGRAM}
+
+set -e
+
+echo
+# Display the Command
+echo "----------------------------"
+echo "curl -s ${URL} | grep \"${PATTERN}\" | grep \"url\" | cut -d : -f 2,3 | tr -d \\\" | tr -d \, "
+echo "----------------------------"
+echo
+
+echo "Downloading ..."
+curl -s ${URL} | grep "${PATTERN}" | grep "url" | cut -d : -f 2,3 | tr -d \"
+echo
+
+# Get th Latest File
+# Issue the Actual Commnd
+curl -s ${URL} \
+    | grep "${PATTERN}" \
+    | grep "url" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | tr -d \, | wget -i -
+
+echo
+
+# Extract
+echo " Extracting files ..."
+mkdir /tmp/${PROGRAM}
+sudo tar -xf ${FILECHAR} -C /tmp/${PROGRAM}
+echo
+
+# Copy File
+echo " Copying files to /usr/local/bin/ ..."
+sudo cp /tmp/${PROGRAM}/${PROGRAM} /usr/local/bin
+sudo rm -rf /tmp/${PROGRAM}
+echo
+
+# Clean up
+echo " Cleaning up afterwards ..."
+rm ${FILECHAR}
+echo
+
+echo
+echo " Done...!"
+echo
