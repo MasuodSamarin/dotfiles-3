@@ -1,0 +1,21 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's docker based Rust Cargo Command Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+docker run --rm --user "$(id -u)":"$(id -g)" \
+	-v "$(pwd)":/usr/src/myapp \
+	-w /usr/src/myapp \
+	rust:alpine cargo $@
+	
+# docker run --rm --user "$(id -u)":"$(id -g)" -v "$PWD":/usr/src/myapp -w /usr/src/myapp rust:1.23.0 cargo build --release
+
