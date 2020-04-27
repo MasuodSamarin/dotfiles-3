@@ -12,10 +12,10 @@
 ##
 ####
 
-docker run --rm --user "$(id -u)":"$(id -g)" \
+docker run --rm \
+    -e USER="$USER" \
+    --user "$(id -u)":"$(id -g)" \
 	-v "$(pwd)":/usr/src/myapp \
 	-w /usr/src/myapp \
 	rust:alpine cargo $@
-	
-# docker run --rm --user "$(id -u)":"$(id -g)" -v "$PWD":/usr/src/myapp -w /usr/src/myapp rust:1.23.0 cargo build --release
 
