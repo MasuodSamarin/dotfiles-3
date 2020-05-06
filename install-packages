@@ -34,7 +34,8 @@ sudo pacman -S make cmake code gitg \
 # Packages - Docs
 sudo pacman -S pdftk pdfarranger zbar \
 	ttf-roboto ttf-roboto-mono gnu-free-fonts \
-	ttf-material-icons hunspell-en_US
+	ttf-material-icons \
+	hunspell-en_US hyphen-en libmythes mythes-en
 
 # Packages - Embedded
 sudo pacman -S moserial lrzsz picocom stlink python-pyserial
