@@ -1,0 +1,96 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Portable Arduino Installer Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+echo
+echo "  Boseji's Portable Arduino Installer Script"
+echo "----------------------------------------------"
+echo
+# Variables
+USER="arduino"
+REPO="Arduino"
+# Find the Latest Tag
+TAG=`curl -s https://api.github.com/repos/$USER/$REPO/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")'`
+# General URI Data
+MD5="https://downloads.arduino.cc/arduino-${TAG}.md5sum.txt"
+PACK="https://downloads.arduino.cc/arduino-${TAG}-linuxaarch64.tar.xz"
+PACK_NAME="arduino-${TAG}-linuxaarch64.tar.xz"
+DIR_NAME="arduino-${TAG}"
+
+echo
+echo " ->  Generating Package for Release ${TAG}"
+echo
+
+if [[ -d "${DIR_NAME}" ]] ; then
+echo " We found an older version of the ${DIR_NAME}"
+echo "  This would be removed and the ${DIR_NAME}/portable will"
+echo "  be backed up"
+echo
+echo " If you are not sure then abort the execution by pressing"
+echo "  'Ctrl + c' key combination."
+echo
+echo " If you are sure : Press 'Enter' to continue"
+read
+[[ -e "portable" ]] && rm -rf portable
+mv -f ${DIR_NAME}/portable portable
+rm -rf ${DIR_NAME}
+echo
+fi
+
+echo " 1. Downloading ${PACK_NAME}"
+echo
+[[ -e "$PACK_NAME" ]] && rm $PACK_NAME
+wget -c -O $PACK_NAME $PACK
+echo
+
+echo " 2. Downloading MD5 Sums"
+echo
+curl -s ${MD5} | grep ${PACK_NAME} | md5sum --check
+echo
+
+echo " 3. Extracting files in ${PACK_NAME}"
+echo
+
+tar -xf ${PACK_NAME}
+echo
+
+echo " 4. Creating Portable Directories"
+echo "    As per - https://www.arduino.cc/en/Guide/PortableIDE"
+echo
+mkdir -p ${DIR_NAME}/portable/packages
+mkdir -p ${DIR_NAME}/portable/sketchbook/libraries
+mkdir -p ${DIR_NAME}/portable/staging
+echo
+
+echo " 5. Cleaning up files"
+echo
+[[ -e "$PACK_NAME" ]] && rm $PACK_NAME
+
+echo
+echo "-----------------------------------"
+echo
+echo "   Success !"
+echo
+echo " Your Portable installation is Ready under $(pwd)/${DIR_NAME}"
+echo
+echo " To run the IDE: Open a Terminal window and type the following"
+echo "  - Run ' cd $(pwd)/${DIR_NAME} ' without the quotes of-course."
+echo "  - Next ' ./arduino ' without the quotes of-course."
+echo
+echo " Note: That the required permissions need to provied for serial "
+echo "       serial port and hardware access."
+echo "       Alternatively you can also run Linux installer script."
+echo "       - Go to ' cd $(pwd)/${DIR_NAME} ' (directory without the quotes)"
+echo "       - Run the script with command ./arduino-linux-setup.sh \$USER"
+echo
+
