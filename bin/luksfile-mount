@@ -1,0 +1,118 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's LUKS In File Volume Mounting Utility
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+## Derived Work from: https://willhaley.com/blog/encrypted-file-container-disk-image-in-linux/
+#
+
+set -e
+echo "
+  Boseji's LUKS In File Volume Mounting Utility
+-------------------------------------------------
+
+ Command Line: luksfile-mount \$FNAME \$KEYNAME [-f]
+ 
+  Note: For this to work Correctly you need 'cryptsetup' or 'dm-crypt'
+        are installed. Check this before you proceed
+ where:
+   \$FNAME = Path to volume that needs to be mounted
+   \$KEYNAME = Path to the Key File
+   -f (optional) = Force current User Permissions in volume"
+# Command Line Variables
+FNAME=$1
+KEYNAME=$2
+FORCE=$3
+
+# Check Parameters
+if [ "${FNAME}" == "" ] ; then
+echo "
+ ERROR: Need a 'Volume Path' for \$FNAME else we cant Proceed
+"
+exit 1
+fi
+if [ "${KEYNAME}" == "" ] ; then
+echo "
+ ERROR: Need a 'Key File Path' for \$KEYNAME else we cant Proceed
+"
+exit 2
+fi
+if [ ! -e "${FNAME}" ] ; then
+echo "
+ ERROR: Need a 'Volume Path' for \$FNAME that exists
+   else we cant Proceed
+"
+exit 3
+fi
+if [ ! -e "${KEYNAME}" ] ; then
+echo "
+ ERROR: Need a 'Key File Path' for \$KEYNAME that exists
+   else we cant Proceed
+"
+exit 4
+fi
+echo " 
+ - For Current Execution:  luksfile-mount $FNAME $KEYNAME $FORCE"
+
+# Parameter Transformation
+if [ "${FORCE}" == "-f" ] ; then
+echo " - Current user '$USER' will own all files in the volume"
+FORCE=true
+else
+FORCE=false
+fi
+echo " 
+ Are you ready to Proceed ?
+ Press 'Enter' to Continue or 'Ctrl+c' to Terminate"
+read
+
+# Variables
+RANDOMVAL=`od -An -N1 -i /dev/urandom | awk '{print $1}'`
+FILTERNAME=`basename ${FNAME} | cut -d '.' -f1`
+MOUNT="${FILTERNAME}volume"
+DIR="${FILTERNAME}"
+VOLNAME="${FNAME}"
+
+# Begin Processing
+echo "
+  1. Opening the Volume
+"
+echo "sudo cryptsetup luksOpen ${VOLNAME} ${MOUNT} \\
+	--key-file ${KEYNAME}"
+sudo cryptsetup luksOpen ${VOLNAME} ${MOUNT} \
+	--key-file ${KEYNAME}
+
+echo "
+   2. Mounting the volume to a temporary directory
+"
+if [ ! -d "$HOME/${DIR}" ] ; then
+echo "mkdir -p \$HOME/${DIR}"
+mkdir -p $HOME/${DIR}
+fi
+echo "
+sudo mount /dev/mapper/${MOUNT} \$HOME/${DIR}/"
+sudo mount /dev/mapper/${MOUNT} $HOME/${DIR}/
+
+# Check for Force Flag
+if [ "$FORCE" = true ] ; then
+echo "
+   3. Give current user all the ownership of the files
+"
+echo "sudo chown -R \$USER \$HOME/${DIR}/"
+sudo chown -R $USER $HOME/${DIR}/
+fi
+
+echo "
+-------------------------------------------------
+   Success !
+"
+
+

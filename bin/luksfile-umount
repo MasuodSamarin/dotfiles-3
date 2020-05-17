@@ -1,0 +1,76 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's LUKS In File Volume Unmount Utility
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+## Derived Work from: https://willhaley.com/blog/encrypted-file-container-disk-image-in-linux/
+#
+
+set -e
+echo "
+  Boseji's LUKS in File Volume Unmount Utility
+------------------------------------------------
+
+ Command Line: luksfile-umount \$FNAME
+ 
+ where:
+   \$FNAME = Path to a Directory where the volume was mounted
+" 
+# Command Line Variables
+FNAME=$1
+
+# Check Parameters
+if [ "${FNAME}" == "" ] ; then
+echo "
+ ERROR: Need a 'Mounted volume Path' for \$FNAME else we cant Proceed
+"
+exit 1
+fi
+if [ ! -d "${FNAME}" ] ; then
+echo "
+ ERROR: Need a 'Mounted volume Path' for \$FNAME that exists
+   else we cant Proceed
+"
+exit 3
+fi
+
+echo "
+ - For Current Execution:  luksfile-umount $FNAME
+
+ Are you ready to Proceed ?
+ Press 'Enter' to Continue or 'Ctrl+c' to Terminate"
+read
+
+# Variables
+FILTERNAME=`basename ${FNAME} | cut -d '.' -f1`
+MOUNT="${FILTERNAME}volume"
+DIR="${FNAME}"
+
+# Begin Processing
+echo "
+   1. Unmount the Volume
+"
+echo "sudo umount ${DIR}"
+sudo umount ${DIR}
+
+echo "
+   2. Close the Volume and clean-up
+"
+echo "sudo cryptsetup luksClose ${MOUNT}"
+sudo cryptsetup luksClose ${MOUNT}
+echo "
+rm -rf ${DIR}"
+rm -rf ${DIR}
+
+echo "
+-------------------------------------------------
+   Success !
+"

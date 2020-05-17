@@ -1,0 +1,122 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's LUKS In File Volume Creator Utility
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+## Derived Work from: https://willhaley.com/blog/encrypted-file-container-disk-image-in-linux/
+#
+
+set -e
+echo "
+  Boseji's LUKS in File Volume Creator Utility
+------------------------------------------------
+
+ Command Line: luksfile-create [\$FNAME] [\$CAPACITY] [\$KEYSIZE]
+ 
+  Note: For this to work Correctly you need 'cryptsetup' or 'dm-crypt'
+        are installed. Check this before you proceed"
+# Variables
+CAPACITY=${2:-1G}
+FNAME=${1:-myVol}
+VOLNAME="${FNAME}.img"
+KEYNAME="${FNAME}.keyfile"
+KEYSIZE=${3:-4096}
+echo "
+ - For Current Execution:  luksfile-create $FNAME $CAPACITY $KEYSIZE
+
+where:
+   \$FNAME (optional) = Name of the Volume you wish to create
+   \$CAPACITY (optional) = Capacity in GB for the size of the volume
+          written as 'XG' where 'G' stands for GB.
+   \$KEYSIZE (optional) = Size of the Keyfile in Bytes.
+         Typical values: 1024 / 2048 / 4096 / 8192
+
+ Are you ready to Proceed ?
+ Press 'Enter' to Continue or 'Ctrl+c' to Terminate"
+read
+
+echo "
+   1. Creating the Volume
+"
+echo "dd if=/dev/zero of=${VOLNAME} bs=1 count=0 seek=${CAPACITY}"
+dd if=/dev/zero of=${VOLNAME} bs=1 count=0 seek=${CAPACITY}
+sleep 2
+echo "
+   2. Creating the KeyFile
+"
+
+echo "dd if=/dev/random of=${KEYNAME} bs=${KEYSIZE} count=1"
+dd if=/dev/urandom of=${KEYNAME} bs=${KEYSIZE} count=1
+sleep 2
+
+echo "
+   3. Formatting the ${VOLNAME} for LUKS
+   - Make sure to type \"YES\" in CAPITAL LETTERS
+"
+
+echo "sudo cryptsetup luksFormat ${VOLNAME} ${KEYNAME}"
+sudo cryptsetup luksFormat ${VOLNAME} ${KEYNAME}
+sleep 2
+
+echo "
+   4. Opening the Volume for the first time
+"
+
+echo "sudo cryptsetup luksOpen ${VOLNAME} mVolTemp \\
+	--key-file ${KEYNAME}"
+sudo cryptsetup luksOpen ${VOLNAME} mVolTemp \
+	--key-file ${KEYNAME}
+sleep 2
+
+echo "
+   5. Creating EXT4 filesystem in the volume
+"
+echo "sudo mkfs.ext4 /dev/mapper/mVolTemp"
+sudo mkfs.ext4 /dev/mapper/mVolTemp
+sleep 2
+
+echo "
+   6. Mounting the volume to a temporary directory
+"
+echo "mkdir -p /tmp/Private"
+mkdir -p /tmp/Private
+echo "
+sudo mount /dev/mapper/mVolTemp /tmp/Private/"
+sudo mount /dev/mapper/mVolTemp /tmp/Private/
+sleep 2
+
+echo "
+   7. Give current user all the ownership of the files
+"
+echo "sudo chown -R \$USER /tmp/Private/"
+sudo chown -R $USER /tmp/Private/
+sleep 2
+
+echo "
+   8. Unmount the Volume
+"
+echo "sudo umount /tmp/Private"
+sudo umount /tmp/Private
+sleep 2
+
+echo "
+   9. Close the Volume and clean-up
+"
+echo "sudo cryptsetup luksClose mVolTemp"
+sudo cryptsetup luksClose mVolTemp
+echo "
+rm -rf /tmp/Private"
+rm -rf /tmp/Private
+
+echo "
+-------------------------------------------------
+   Success !
+"
