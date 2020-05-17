@@ -59,7 +59,8 @@ sleep 2
 
 echo "
    3. Formatting the ${VOLNAME} for LUKS
-   - Make sure to type \"YES\" in CAPITAL LETTERS
+   - Need 'sudo' so Root permissions needed
+   - Make sure to type \"YES\" in CAPITAL LETTERS   
 "
 
 echo "sudo cryptsetup luksFormat ${VOLNAME} ${KEYNAME}"

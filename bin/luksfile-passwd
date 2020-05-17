@@ -4,7 +4,7 @@
 
 ####
 ##
-## Boseji's LUKS In File Volume Mounting Utility
+## Boseji's LUKS In File Volume Password Adding Utility
 ##
 ## SPDX-License-Identifier: GPL-2.0-only
 ##
@@ -16,21 +16,20 @@
 
 set -e
 echo "
-  Boseji's LUKS In File Volume Mounting Utility
--------------------------------------------------
+  Boseji's LUKS In File Volume Password Adding Utility
+--------------------------------------------------------
 
- Command Line: luksfile-mount \$FNAME \$KEYNAME [-f]
+ Command Line: luksfile-passwd \$FNAME \$KEYNAME
  
   Note: For this to work Correctly you need 'cryptsetup' or 'dm-crypt'
         are installed. Check this before you proceed
  where:
-   \$FNAME = Path to volume that needs to be mounted
+   \$FNAME = Path to volume for which Password needs to be added
    \$KEYNAME = Path to the Key File
    -f (optional) = Force current User Permissions in volume"
 # Command Line Variables
 FNAME=$1
 KEYNAME=$2
-FORCE=$3
 
 # Check Parameters
 if [ "${FNAME}" == "" ] ; then
@@ -55,11 +54,6 @@ if [ ! -e "${FNAME}" ] ; then
     MOD_FNAME="./${FNAME}.img"
     MOD_KEYNAME="./${FNAME}.keyfile"
         if [ -e "${MOD_FNAME}" ] && [ -e "${MOD_KEYNAME}" ] ; then
-            # Check if the Force Parameter was given in the $KEYNAME
-            if [ "${KEYNAME}" == "-f" ] ; then
-                FORCE="${KEYNAME}"
-            fi
-            # Assign the values
             FNAME="${MOD_FNAME}"
             KEYNAME="${MOD_KEYNAME}"
         else
@@ -88,58 +82,26 @@ echo "
 "
 exit 4
 fi
-
-
 echo " 
- - For Current Execution:  luksfile-mount $FNAME $KEYNAME $FORCE"
+ - For Current Execution:  luksfile-passwd $FNAME $KEYNAME
 
-# Parameter Transformation
-if [ "${FORCE}" == "-f" ] ; then
-echo " - Current user '$USER' will own all files in the volume"
-FORCE=true
-else
-FORCE=false
-fi
-echo " 
  Are you ready to Proceed ?
  Press 'Enter' to Continue or 'Ctrl+c' to Terminate"
 read
 
 # Variables
-RANDOMVAL=`od -An -N1 -i /dev/urandom | awk '{print $1}'`
-FILTERNAME=`basename ${FNAME} | cut -d '.' -f1`
-MOUNT="${FILTERNAME}volume"
-DIR="${FILTERNAME}"
 VOLNAME="${FNAME}"
 
 # Begin Processing
 echo "
-  1. Opening the Volume
+  1. Add the Password
+  - You need 'sudo' so root permissions
+  - Make sure to repeat the password correctly
 "
-echo "sudo cryptsetup luksOpen ${VOLNAME} ${MOUNT} \\
-	--key-file ${KEYNAME}"
-sudo cryptsetup luksOpen ${VOLNAME} ${MOUNT} \
-	--key-file ${KEYNAME}
 
-echo "
-   2. Mounting the volume to a temporary directory
+echo "sudo cryptsetup luksAddKey -y ${VOLNAME} --key-file ${KEYNAME}
 "
-if [ ! -d "$HOME/${DIR}" ] ; then
-echo "mkdir -p \$HOME/${DIR}"
-mkdir -p $HOME/${DIR}
-fi
-echo "
-sudo mount /dev/mapper/${MOUNT} \$HOME/${DIR}/"
-sudo mount /dev/mapper/${MOUNT} $HOME/${DIR}/
-
-# Check for Force Flag
-if [ "$FORCE" = true ] ; then
-echo "
-   3. Give current user all the ownership of the files
-"
-echo "sudo chown -R \$USER \$HOME/${DIR}/"
-sudo chown -R $USER $HOME/${DIR}/
-fi
+sudo cryptsetup luksAddKey -y ${VOLNAME} --key-file ${KEYNAME}
 
 echo "
 -------------------------------------------------

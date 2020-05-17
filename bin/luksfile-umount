@@ -34,12 +34,22 @@ echo "
 "
 exit 1
 fi
-if [ ! -d "${FNAME}" ] ; then
+function exiton_fname
+{
 echo "
- ERROR: Need a 'Mounted volume Path' for \$FNAME that exists
+ ERROR: Need a 'Volume Path' for \$FNAME that exists
    else we cant Proceed
 "
 exit 3
+}
+if [ ! -d "${FNAME}" ] ; then
+    # If we have this mounted
+    MOD_DIR="$HOME/${FNAME}"
+    if [ -d "${MOD_DIR}" ] ; then
+        FNAME="${MOD_DIR}"
+    else
+        exiton_fname
+    fi
 fi
 
 echo "
