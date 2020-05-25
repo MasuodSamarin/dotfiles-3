@@ -49,4 +49,10 @@ sudo -H pip install --upgrade youtube-dl
 
 # Packages - Extras
 # sudo pacman -S xfce4-sensors-plugin
-
+# Download MPLABX-Installer for Linux
+# wget -c https://www.microchip.com/mplabx-ide-linux-installer -O mplabx-ide-linux-installer.tar
+# tar -xf mplabx-ide-linux-installer.tar
+# sudo sh ./MPLABX-*-installer.sh
+# wget -c https://www.microchip.com/mplabxc8linux -O mplabx-xc8-installer.run
+# chmod +x mplabx-xc8-installer.run
+# sudo ./mplabx-xc8-installer.run
