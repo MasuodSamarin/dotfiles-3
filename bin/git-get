@@ -1,0 +1,182 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's Git Tag Fetching Utility
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+set -e
+# Input Variables
+USER=$1
+REPONAME=$2
+VER=$3 # For Version
+REPO=$USER
+# For Filtred URL
+FURL=""
+
+# Heading
+echo "
+  Boseji's Git Tag Fetching Utility
+-------------------------------------
+"
+
+# Usage Print Function
+function usage
+{
+echo "
+ Usage: 
+  git-get \$USER \$REPONAME \$TAG 
+  or  
+  git-get \$REPO [\$TAG]
+  
+ Where:
+  
+  \$USER = Github Username who owns the repository
+        .e.g. for 'https://github.com/boseji/CircularQueue.git'
+            it would be 'boseji'
+  \$REPONAME = Gitub Repository Name owned by \$USER
+        .e.g. for 'https://github.com/boseji/CircularQueue.git'
+            it would be 'CircularQueue'
+  \$REPO = Complete Github HTTPS URL to the Repository
+      .e.g. https://github.com/boseji/CircularQueue.git 
+  \$TAG (optional) = Version to obtain. 
+     values: \"latest\" = Release version is fetched
+     values: \"current\" = Last commit version is fetched
+     values: If this is omitted then assumed to be \"latest\"
+     values: <Any valid SHA#> then the particular version head is fetched.
+"
+}
+
+function filterurl
+{
+    local URL=$1
+    local CHECKHTTPS=`echo ${URL} | grep "https"`
+    # Default It should be OK
+    FURL=$URL
+    # If HTTPS Check Fails
+    if [ -z "${CHECKHTTPS}" ] ; then
+        # Check if we can split into only 2 parts
+        local PARTS=`echo ${URL}|grep -c "/"`
+        # Error in Processing
+        if [ "${PARTS}" != "1" ] ; then
+            return 1
+        fi        
+    else
+        # Assign to the Filtered Part
+        FURL=`echo ${URL} | sed 's/https\:\/\/github.com\///g' | sed 's/.git//g'`
+    fi
+    # Process the User Name and Repository Name
+    USER=`echo ${FURL}|sed 's/\/.*//g'`
+    REPONAME=`echo ${FURL}|sed 's/.*\///g'`
+    return 0
+}
+
+function fetch
+{
+    local TAG="${VER}"
+    local DIRNAME="${USER}_${REPONAME}"
+    local GITURL="https://github.com/${USER}/${REPONAME}.git"
+    local GITAPI="https://api.github.com/repos/${USER}/${REPONAME}/releases/latest"
+    local GITCOMMIT="https://api.github.com/repos/${USER}/${REPONAME}/commits/master"
+    local OPTIONS="--depth 1 -c advice.detachedHead=false"
+    
+    if [ "$TAG" == "current" ] ; then
+        VER=`curl -s ${GITCOMMIT} | grep -oP '"sha": "\K(.*)(?=")' | head -1 `
+        echo " Fetching the Current version ${VER} of"
+        echo " ${GITURL}"
+        echo
+        DIRNAME="${DIRNAME}_${VER}"
+    elif [ "$TAG" == "latest" ] ; then
+        VER=`curl -s ${GITAPI} | grep -oP '"tag_name": "\K(.*)(?=")'`
+        DIRNAME="${DIRNAME}_${VER}"
+        # If there are No releases
+        if [ -z "${VER}" ] ; then
+            echo " ERROR No releases available for"
+            echo "  ${GITURL}"
+            return 1
+        fi
+        echo " Fetching the Release version ${VER} of"
+        echo " ${GITURL}"
+        echo
+        OPTIONS="${OPTIONS} -b ${VER}"
+    elif [ ! -z "$TAG" ] ; then
+        DIRNAME="${DIRNAME}_${TAG}"
+        echo " Fetching the Version ${TAG} of"
+        echo " ${GITURL}"
+        echo
+        OPTIONS="${OPTIONS} -b ${TAG}"        
+    else
+        return 1
+    fi
+    
+    # If the Directory Already Exits
+    if [ -d "${DIRNAME}" ] ; then
+        echo "> We found that ${DIRNAME} already exits"
+        echo "  Do you wish to continue ?"
+        echo
+        echo " Press Enter to Accept or Ctrl+c to Stop"
+        read
+        echo "> Removing Directory ${DIRNAME}"
+        rm -rf ${DIRNAME}
+    fi
+    
+    # Perfrom the Acutal Cloning
+    echo "> Performing 'git clone' command"
+    echo
+    if git clone ${OPTIONS} ${GITURL} ${DIRNAME} ; then
+        # Remove Git files
+        rm -rf ${DIRNAME}/.git
+        return 0
+    fi
+    return 2
+}
+
+function success
+{
+echo "
+-------------------------------------------------
+   Success !
+"
+exit 0
+}
+##########
+## Begin
+
+# If the first argument was Nothing or Help
+if [ -z "${USER}" -o "${USER}" == "-h" -o "${USER}" == "--help" ] ; then
+    usage
+    exit 0
+
+# If Two Arguments given
+elif [ -z "${VER}" ] ; then
+    VER=$REPONAME # For Supplied Version
+    
+# If Actually only One Argument Given
+    if [ -z "${REPONAME}" ] ; then
+        VER="latest" # For Latest Release since nothing is provied
+    fi
+    
+    if filterurl ${REPO} ; then
+        echo "> Processing - ${FURL}"
+        echo
+    else
+        echo " ERROR in Repository URL "
+        exit 1
+    fi
+# If we have all three Arguments
+else
+    echo "> Processing ${USER}/${REPONAME} for ${VER}"
+fi
+
+# If the Fetch operation did work correctly
+if fetch ; then
+    success
+fi
+
