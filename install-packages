@@ -29,7 +29,7 @@ sudo pacman -S keepassxc veracrypt libgcrypt
 sudo pacman -S make cmake code gitg \
 	python-pip python-virtualenv python-pygments \
 	go nodejs npm nano-syntax-highlighting \
-	rustup lldb gdb
+	rustup lldb gdb meld
 
 # Packages - Docs
 sudo pacman -S pdftk pdfarranger zbar \
