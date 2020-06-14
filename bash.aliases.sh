@@ -94,12 +94,25 @@ function ipaddr()
 		echo "Empty Interface"
 		return 1
 	fi
-	local info=`ip addr show dev ${INTERFACE} | grep "DOWN"`
-	if [ -z "${info}" ] ; then
-		ip -4 addr show dev ${INTERFACE} | grep "inet" | awk "{printf \$2}" | cut -d "/" -f 1
-	else
-		echo "No Address"
-	fi
+    if [ "${INTERFACE}" == "list" ] ; then
+        ip -4 addr show
+        return 0
+    fi
+    if [ "${INTERFACE}" == "all" ] ; then
+        ip addr
+        return 0
+    fi
+    if ip addr show dev ${INTERFACE} &>/dev/null ; then
+        local info=`ip addr show dev ${INTERFACE} | grep "DOWN"`
+        if [ -z "${info}" ] ; then
+            ip -4 addr show dev ${INTERFACE} | grep "inet" | awk "{printf \$2}" | cut -d "/" -f 1
+        else
+            echo "No Address"
+        fi
+    else
+        echo "ERROR: Interface Does not Exist"
+        return 2
+    fi
 	return 0
 }
 
