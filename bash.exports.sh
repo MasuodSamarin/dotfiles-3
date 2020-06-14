@@ -59,3 +59,6 @@ if [ -d "$HOME/Arduino/libraries" ] ; then
 	export ARDUINO_WORKSPACE=$HOME/Arduino
 fi
 
+# Adding GPG Command-line Validation
+export GPG_TTY=$(tty)
+
