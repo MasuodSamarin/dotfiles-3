@@ -56,6 +56,6 @@ if [ -d "$HOME/.arduino15/packages" ] ; then
 	export ARDUINO_PACKAGES=$HOME/.arduino15/packages
 fi
 if [ -d "$HOME/Arduino/libraries" ] ; then
-	export ARDUINO_WORKSPACE=$HOME/Arduino/libraries
+	export ARDUINO_WORKSPACE=$HOME/Arduino
 fi
 
