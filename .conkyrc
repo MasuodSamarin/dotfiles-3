@@ -9,6 +9,7 @@ Please see COPYING for details
 
 Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
 Copyright (c) 2005-2019 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+Customized by Copyright (c) 2020 Abhijit Bose <https://boseji.com>
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -100,7 +101,9 @@ ${hr}
 ${font Monospace:style=Bold:size=11}\
 ${if_match "${addr wlp3s0}"!="No Address"}WiFi Int IP:${alignr}${addr wlp3s0}${else}${voffset -20}${endif}
 ${if_match "${addr wlp0s20u9u1}"!="No Address"}WiFi USB IP:${alignr}${addr wlp0s20u9u1}${else}${voffset -20}${endif}
+${if_match "${addr wlp0s20u2}"!="No Address"}WiFi USB IP:${alignr}${addr wlp0s20u2}${else}${voffset -20}${endif}
 ${if_match "${addr enp3s0}"!="No Address"}Eth0     IP:${alignr}${addr enp0s25}${else}${voffset -20}${endif}
+Local    IP:${alignr}${execi 50 ip addr | grep "inet 192" | head -1| awk "{print \$2}"| cut -d "/" -f1}
 External IP:${alignr}${execi 50 curl ipinfo.io/ip}${font}${voffset -5}
 ${hr}
 ${font Monospace:style=Bold:size=18}${color1}\
@@ -108,10 +111,10 @@ Core 0:${alignr}${execi 2 sensors | grep 'Core 0' | cut -c15-20}°C
 Core 1:${alignr}${execi 2 sensors | grep 'Core 1' | cut -c15-20}°C
 Core 2:${alignr}${execi 2 sensors | grep 'Core 2' | cut -c15-20}°C
 Core 3:${alignr}${execi 2 sensors | grep 'Core 3' | cut -c15-20}°C
-${if_match "${acpitemp}"!="N/A"}ACPI  :${alignr}+${acpitemp}.0°C$endif
-${if_match "${hddtemp /dev/sda}"!="N/A"}HDD A :${alignr}+${hddtemp /dev/sda}.0°C$endif
-${if_match "${hddtemp /dev/sda}"!="N/A"}HDD B :${alignr}+${hddtemp /dev/sdb}.0°C$endif$color$font
-$hr
+${if_match "${acpitemp}"!="N/A"}ACPI  :${alignr}+${acpitemp}.0°C${endif}
+${if_match "${hddtemp /dev/sda}"!="N/A"}HDD A :${alignr}+${hddtemp /dev/sda}.0°C${endif}
+${if_match "${hddtemp /dev/sdb}"!="N/A"}HDD B :${alignr}+${hddtemp /dev/sdb}.0°C${endif}${color}${font}
+${hr}
 ${font Monospace:style=Bold:size=11}Name         PID  CPU% MEM%${font}
 ${top_mem name 1}${top_mem pid 1}${top_mem cpu 1} ${top_mem mem 1}
 ${top_mem name 2}${top_mem pid 2}${top_mem cpu 2} ${top_mem mem 2}
