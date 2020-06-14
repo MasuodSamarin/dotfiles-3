@@ -8,43 +8,44 @@
 ##
 ####
 [user]
-  name = boseji
-  email = boseji@users.noreply.github.com
-  tag = boseji
+	name = boseji
+	email = boseji@users.noreply.github.com
+	tag = boseji
+	signingkey = 0123456789ABCDEF
 [color]
-  diff = auto
-  status = auto
-  branch = auto
-  interactive = auto
-  ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = auto
 [color "branch"]
-  current = green bold
-  local = green
-  remote = red bold  
+	current = green bold
+	local = green
+	remote = red bold
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
 [color "status"]
-  added = green bold
-  changed = yellow bold
-  untracked = red
+	added = green bold
+	changed = yellow bold
+	untracked = red
 [color "sh"]
-  branch = yellow
+	branch = yellow
 [push]
-  # 'git push' should only do the current branch, not all
-  default = current
+	# 'git push' should only do the current branch, not all
+	default = current
 [branch]
-  # always setup 'git pull' to rebase instead of merge
-  autosetuprebase = always
+	# always setup 'git pull' to rebase instead of merge
+	autosetuprebase = always
 # Special inclusion for the `go get` commands targeted to own repos
 # - This is now a legacy since Go Mod commands
 # [url "git@github.com:boseji/"]
 	# insteadOf = https://github.com/boseji/
 [alias]
-  	st = status
-	ci = commit
+	st = status
+	cm = commit -S -m
 	br = branch
 	cl = clone --recursive
 	co = checkout
@@ -55,6 +56,7 @@
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all --date=local
 	ls = ls-files
+	revert = reset
 	unstage = reset HEAD
 	#additional Short cuts
 	y = diff "@{yesterday}"
