@@ -20,7 +20,8 @@ sudo pacman -Syu
 
 # Packages - System
 sudo pacman -S htop tree lbzip2 hddtemp lm_sensors stow \
-	bash-completion docker tmux arch-audit fakeroot patch grsync
+	bash-completion docker tmux arch-audit fakeroot patch \
+	grsync smartmontools
 
 # Packages - Security
 sudo pacman -S keepassxc veracrypt libgcrypt
