@@ -1,0 +1,39 @@
+#!/bin/bash
+#                                                          -*- shell-script -*-
+#
+####
+##
+## Boseji's Fixing Script for hddtemp Service
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+if [ "$UID" != "0" ] ; then
+	echo "ERROR: Must run this program as root"
+	exit 1
+fi
+if [ -z "`which hddtmp`" ] ; then
+	echo "ERROR: Must install 'hddtmp' before running this"
+	exit 2
+fi
+if [ -z "`which smartctl`" ] ; then
+	echo "ERROR: Must install 'smartmontools' package before running this"
+	exit 2
+fi
+wget -O /tmp/fix.sh https://raw.githubusercontent.com/boseji/auto-generate-configuration-files/master/gen-customexec.conf-hddtemp.sh
+sudo mkdir -p /etc/systemd/system/hddtemp.service.d
+echo "
+ -> Fixing the hddtemp Config
+"
+sudo sh /tmp/fix.sh |sudo tee /etc/systemd/system/hddtemp.service.d/override.conf
+echo "
+ -> Reloading the daemon for SystemD
+"
+sudo systemctl daemon-reload
+echo "
+ -> Restarting hddtemp service
+"
+sudo systemctl restart hddtemp
+rm -rf /tmp/fix.sh
