@@ -10,7 +10,7 @@
 ##
 ## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
 ##
-
+####
 URL="https://api.github.com/repos/digitalocean/doctl/releases/latest"
 FILECHAR="doctl-*linux-amd64.tar.gz"
 PATTERN="linux-amd64.tar.gz"
