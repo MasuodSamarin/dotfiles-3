@@ -85,6 +85,24 @@ alias dockerip='ip addr show | grep docker |  grep "inet " | awk "{printf \"Dock
 # VPN IP Address Fetch
 alias vpnip='ip addr show | grep tun0 | grep "inet " | awk "{printf \"VPN %s\",\$2}" | cut -d "/" -f 1'
 
+# Get Address
+function ipaddr()
+{
+	local INTERFACE=$1
+	if [ -z "$INTERFACE" ] ; then
+		# Error Empty Interface
+		echo "Empty Interface"
+		return 1
+	fi
+	local info=`ip addr show dev ${INTERFACE} | grep "DOWN"`
+	if [ -z "${info}" ] ; then
+		ip -4 addr show dev ${INTERFACE} | grep "inet" | awk "{printf \$2}" | cut -d "/" -f 1
+	else
+		echo "No Address"
+	fi
+	return 0
+}
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 # alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e'\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
