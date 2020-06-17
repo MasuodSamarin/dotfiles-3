@@ -11,7 +11,36 @@
 ## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
 ##
 ####
+SERIAL_BAUD=${1-9600}
+SERIAL_PORT=${2-/dev/ttyUSB0}
+echo "
+  Boseji's Serial port Script
+-------------------------------  
+"
+# Process Help Request
+if [ "${SERIAL_BAUD}" == "--help" -o "${SERIAL_BAUD}" == "-h" ] ; then
+	echo " Command Format : serial <BaudRate> <Port>
 
+ To Exit Terminal : 'Ctrl + a' (Menu Key) then 'Ctrl + x' (Exit Terminal)
+
+ Note : Additional '--imap lfcrlf' helps to convert Linux terminal 'lf' to 
+                   serial port 'cr+lf'
+ Note : if <BaudRate> == esp then its set to '74880'
+ 
+ Example:  
+ serial 9600 /dev/ttyUSB0
+  - becomes
+    >  picocom -b 9600 --imap lfcrlf /dev/ttyUSB0
+
+ Detailed help on 'picocom' Command:
+"
+	picocom --help
+	exit 0
+fi
+# Special Esp baud rate
+if [ "${SERIAL_BAUD}" == "esp" ] ; then
+SERIAL_BAUD=74880
+fi
 ####
 # Command Format :
 # 
@@ -22,5 +51,7 @@
 #    >  picocom -b 9600 --imap lfcrlf /dev/ttyUSB0
 #
 ####
-picocom -b ${1-9600} --imap lfcrlf ${2-/dev/ttyUSB0}
+echo "Command: picocom -b ${SERIAL_BAUD} --imap lfcrlf ${SERIAL_PORT} 
+"
+picocom -b ${SERIAL_BAUD} --imap lfcrlf ${SERIAL_PORT}
 
