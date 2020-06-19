@@ -17,14 +17,6 @@ if [[ ! -d "$HOME/.gcp_credentials" ]];then
 	dgcloud-login
 fi
 
-# Get Image if not Installed
-export gcpi="google/cloud-sdk"
-export IMAGES="$(sudo docker image ls -a --filter=reference='${gcpi}*:*' | grep '${gcpi}' | awk '{print $1}')"
-
-if [ -z "$IMAGES" ] ; then
-	sudo docker images pull $gcpi
-fi
-
 # Command Cradle
 docker container run --rm -ti \
 	-e CLOUDSDK_CONFIG=/config/gcloud \
