@@ -1,0 +1,26 @@
+#
+##
+## Boseji's USB Rules Files for AVR ISP Programmers
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+# Copy this file to /etc/udev/rules.d/
+# If rules fail to reload automatically, you can refresh udev rules
+# with the command "udevadm control --reload"
+
+# Usb Tiny ISP
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1781", ATTRS{idProduct}=="0c9f", GROUP="users", MODE="0660"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0479", GROUP="users", MODE="0660"
+
+# Atmel Corp. JTAG ICE mkII
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2103", GROUP="users", MODE="660"
+
+# Atmel Corp. AVRISP mkII
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", GROUP="users", MODE="660"
+
+# Atmel Corp. Dragon
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2107", GROUP="users", MODE="660"
+
+LABEL="avrisp_end"
