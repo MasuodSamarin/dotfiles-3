@@ -2,6 +2,7 @@
 #                                                          -*- shell-script -*-
 #
 
+echo "
 ####
 ##
 ## Boseji's Custom Package installation for Manjaro / Arch Linux
@@ -12,42 +13,53 @@
 ##
 ####
 
+"
 # Exit On Error
 set -e
 
-# Update Repos - with upgrade
+echo " - Update Repos - with upgrade"
+echo
 sudo pacman -Syu
-
-# Packages - System
+echo
+echo " - Installing Packages - System"
+echo
 sudo pacman -S htop tree lbzip2 hddtemp lm_sensors stow \
 	bash-completion docker tmux arch-audit fakeroot patch \
 	grsync smartmontools
-
-# Packages - Security
+echo	
+echo " - Add user to the Required Groups"
+sudo usermod -aG uucp $USER
+sudo usermod -aG lock $USER
+sudo usermod -aG docker $USER
+echo
+echo " - Installing Packages - Security"
+echo
 sudo pacman -S keepassxc veracrypt libgcrypt
-
-# Packages - Development
+echo
+echo " - Installing Packages - Development"
+echo
 sudo pacman -S make cmake code gitg \
 	python-pip python-virtualenv python-pygments \
 	go nodejs npm nano-syntax-highlighting \
 	rustup lldb gdb meld
-
-# Packages - Docs
+echo
+echo " - Installing Packages - Documents and Spell Checkers"
+echo
 sudo pacman -S pdftk pdfarranger zbar \
 	ttf-roboto ttf-roboto-mono gnu-free-fonts \
 	ttf-material-icons \
 	hunspell-en_US hyphen-en libmythes mythes-en
-
-# Packages - Embedded
-sudo pacman -S moserial lrzsz picocom stlink python-pyserial
-
-# Packages - Internet Communications
+echo
+echo " - Installing Packages - Embedded & Electronics"
+sudo pacman -S openocd moserial lrzsz picocom stlink python-pyserial
+echo
+echo " - Installing Packages - Internet Communications"
 sudo pacman -S telegram-desktop ttf-opensans
-
-# Packages - Multimedia
-sudo pacman -S vlc
-sudo -H pip install --upgrade youtube-dl
-
+echo
+echo " - Installing Packages - Multimedia Tools"
+echo
+sudo pacman -S vlc audacity simplescreenrecorder youtube-dl
+echo
 # Packages - Extras
 # sudo pacman -S xfce4-sensors-plugin
 # Download MPLABX-Installer for Linux
