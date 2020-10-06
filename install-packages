@@ -47,7 +47,10 @@ echo " - Installing Packages - Documents and Spell Checkers"
 echo
 sudo pacman -S pdftk pdfarranger zbar \
 	ttf-roboto ttf-roboto-mono gnu-free-fonts \
-	ttf-material-icons \
+	ttf-jetbrains-mono ttf-ionicons ttf-font-icons ttf-font-awesome \
+	ttf-fira-mono ttf-fira-sans ttf-fira-code ttf-comfortaa \
+	ttf-cormorant ttf-croscore ttf-carlito ttf-bitstream-vera \
+	ttf-indic-otf ttf-inconsolata ttf-droid noto-fonts \
 	hunspell-en_US hyphen-en libmythes mythes-en
 echo
 echo " - Installing Packages - Embedded & Electronics"
