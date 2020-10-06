@@ -42,7 +42,7 @@ sudo pacman -S pdftk pdfarranger zbar \
 sudo pacman -S moserial lrzsz picocom stlink python-pyserial
 
 # Packages - Internet Communications
-sudo pacman -S chromium telegram-desktop ttf-opensans
+sudo pacman -S telegram-desktop ttf-opensans
 
 # Packages - Multimedia
 sudo pacman -S vlc
