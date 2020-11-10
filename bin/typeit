@@ -1,0 +1,125 @@
+#!/usr/bin/python
+#                                                          -*- shell-script -*-
+#
+print("""
+####
+##
+## Boseji's Automatic Key Typing Tool
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+""")
+####
+##
+## Auto Key type using : PyAutoGUI & pyperclip
+##
+## Web - https://pypi.org/project/PyAutoGUI/
+## Docs - https://pyautogui.readthedocs.io/en/latest/
+## 
+## Keyboard Control
+## 
+## Source -
+## https://rosettacode.org/wiki/Simulate_input/Keyboard
+##
+####
+
+
+import argparse
+import time
+import sys
+
+
+try:
+	import pyautogui
+except ImportError as error:
+	print("""
+	ERROR! You need to have pyautogui installed
+	
+	There are 2 ways to Solve this.
+	
+	- Direct Install
+	'sudo pip install pyautogui'
+	
+	- If you dont have 'pip' then
+	'sudo python -m pip install pyautogui'
+	
+	- Or Install by OS Packages in Arch 
+	[ http://aur.archlinux.org/packages/python-pyautogui ]
+	'sudo yay S pyautogui'
+	
+	""")
+
+
+try:
+	import pyperclip
+except ImportError as error:
+	print("""
+	ERROR! You need to have pyperclip installed
+	
+	There are 2 ways to Solve this.
+	
+	- Direct Install
+	'sudo pip install pyperclip'
+	
+	- If you dont have 'pip' then
+	'sudo python -m pip install pyperclip'
+	
+	- Or Install by OS Packages in Arch 
+	'sudo pacman -S python-pyperclip'
+	
+	""")
+
+
+# Get Python Version
+runningOnPython2 = sys.version_info[0] == 2
+
+if runningOnPython2:
+    INPUT_FUNC = raw_input
+else:
+    INPUT_FUNC = input
+
+
+# Typeit function
+def typeit(text="",delay=5,interval=0.025):
+	print(" --? Waiting {}Seconds to Begin\n".format(delay))
+	time.sleep(delay)
+	print(" --> Typeing Started")
+	pyautogui.write(message=text,interval=interval)
+	print(" <-- Typeing Ended")
+
+
+# Main Program
+if __name__ == "__main__":
+	pst = pyperclip.paste()
+	defaulttxt = "Hari Aum"
+	parser = argparse.ArgumentParser(description="Auto TypeIt Program")
+	parser.add_argument("-d", "--delay", 
+						help="Delay in Seconds before starting the typeing (default=10Sec)", 
+						type=int, default=10)
+	parser.add_argument("-i","--interval",
+	                    help="Interval between each key press (default=0.025Sec =25Milliseconds)",
+	                    type=float, default=0.025)
+	parser.add_argument("-p", "--paste",
+						help="Paste from Clipboard", action="store_true", default=True)
+	parser.add_argument("-t", "--txt", help="Text to be Type-Written", default=defaulttxt)
+	args = parser.parse_args()
+	if args.txt or args.paste:
+		txt = args.txt
+		if args.paste and txt == defaulttxt:
+			txt = pst
+			print("  Text Input          : Default Text")
+		else:
+			print("  Text Input          : '{}'".format(args.txt))
+		print("  Pasted Text         : {}".format(pst))
+		print("  Typing Text         : <Start>{}<End>.".format(txt))
+		print("  With Starting Delay : {} Seconds".format(args.delay))
+		print("  With Inerval Delay  : {} Milliseconds".format(args.interval*1000))
+		print()
+		typeit(text=txt,delay=args.delay,interval=args.interval)
+		print()
+		print("Done!")
+		print()
+
