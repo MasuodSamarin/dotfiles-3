@@ -392,7 +392,7 @@ Here is the sundry list of utilities:
 ```shell {linenos=false}
 sudo pacman -S firefox lm_sensors keepassxc qpdfview pdfarranger zbar qtqr \
  xsane featherpad notepadqq telegram-desktop nomacs vlc libreoffice hunspell \
- hunspell-en_US languagetool keychain gnome-keyring
+ hunspell-en_US languagetool keychain gnome-keyring seahorse
 ```
 ### 7. Remove some packages from XFCE group
 There are some utilies that overlap hence need to be removed.
