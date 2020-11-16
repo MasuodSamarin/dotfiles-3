@@ -14,7 +14,7 @@ if [ "$UID" != "0" ] ; then
 	echo "ERROR: Must run this program as root"
 	exit 1
 fi
-if [ -z "`which hddtmp`" ] ; then
+if [ -z "`which hddtemp`" ] ; then
 	echo "ERROR: Must install 'hddtmp' before running this"
 	exit 2
 fi

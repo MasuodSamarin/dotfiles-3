@@ -21,4 +21,4 @@ fi
 
 cp -v -r ./bin $HOME
 
-ls -1 ./bin > $HOME/bin/.rsyncignore
+#ls -1 ./bin > $HOME/bin/.rsyncignore

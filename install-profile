@@ -36,6 +36,7 @@ fi
 
 export ubuntu="$(cat /etc/issue | grep Ubuntu)"
 export manjaro="$(cat /etc/issue | grep Manjaro)"
+export arch="$(cat /etc/issue | grep Arch)"
 
 if [ ! -z "$manjaro" ] ; then
 
@@ -58,7 +59,16 @@ elif [ ! -z "$ubuntu" ] ; then
         echo
         /bin/cp -v -- ./originals-ubuntu/.* $HOME
     fi
+elif [ ! -z "$arch" ] ; then
 
+    echo
+    echo "ARCH Linux OS found"
+    echo
+    if [ "$1" == "-f" ]; then
+        echo "   Copying files .profile files"
+        echo
+        /bin/cp -v -- ./originals-manjaro/.* $HOME
+    fi
 else
     
     echo
@@ -98,12 +108,12 @@ rsynci()
     fi
 }
 # Add ignore for the files not needing backup
-rsynci bash.aliases
-rsynci bash.exports
-rsynci .gitconfig
-rsynci .tmux.conf
-rsynci .hyper.js
-rsynci .nanorc
+#rsynci bash.aliases
+#rsynci bash.exports
+#rsynci .gitconfig
+#rsynci .tmux.conf
+#rsynci .hyper.js
+#rsynci .nanorc
 
 echo
 echo "   Running the Bin directory Installation"

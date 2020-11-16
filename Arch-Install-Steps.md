@@ -291,7 +291,7 @@ systemctl enable org.cups.cupsd
 ### 9. Create assign groups to the Normal user
 We have chosen the name `archer` for our user:
 ```shell {linenos=false}
-useradd -m -g users -G wheel,storage,power,lp -s /bin/bash archer
+useradd -m -g users -G wheel,storage,power,lp,lock,uucp -s /bin/bash archer
 ```
 Next we set a password for the user:
 ```shell {linenos=false}
@@ -370,13 +370,13 @@ Next we install the Desktop Environment and its utilities:
 sudo pacman -S xorg xf86-input-libinput libinput xfce4 xfce4-goodies \
  xfce4-sensors-plugin archlinux-xdg-menu lightdm lightdm-gtk-greeter \
  pavucontrol gvfs firefox udisks2 udiskie udevil xarchiver p7zip usbutils \
- cups-pdf libcups system-config-printer blueman firewalld ipset ebtables \
+ cups-pdf libcups system-config-printer blueman ufw ipset ebtables \
  p7zip network-manager-applet youtube-dl
 ```
 ### 5. Enable Important Services
 Configure the GUI environment again using `systemd`:
 ```shell {linenos=false}
-sudo systemctl enable firewalld
+sudo ufw enable
 sudo systemctl enable lightdm
 ```
 If you are using **SSD** for the install then you also need to enable
@@ -392,7 +392,9 @@ Here is the sundry list of utilities:
 ```shell {linenos=false}
 sudo pacman -S firefox lm_sensors keepassxc qpdfview pdfarranger zbar qtqr \
  xsane featherpad notepadqq telegram-desktop nomacs vlc libreoffice hunspell \
- hunspell-en_US languagetool keychain gnome-keyring seahorse
+ hunspell-en_US languagetool keychain gnome-keyring seahorse \
+ hddtemp smartmontools tree patch tmux veracrypt htop hyphen-en libmythes \
+ mythes-en gitg meld arch-audit gufw
 ```
 ### 7. Remove some packages from XFCE group
 There are some utilies that overlap hence need to be removed.
