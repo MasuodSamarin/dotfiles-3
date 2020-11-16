@@ -392,7 +392,7 @@ Here is the sundry list of utilities:
 ```shell {linenos=false}
 sudo pacman -S firefox lm_sensors keepassxc qpdfview pdfarranger zbar qtqr \
  xsane featherpad notepadqq telegram-desktop nomacs vlc libreoffice hunspell \
- hunspell-en_US languagetool keychain openssh-askpass
+ hunspell-en_US languagetool keychain gnome-keyring
 ```
 ### 7. Remove some packages from XFCE group
 There are some utilies that overlap hence need to be removed.
@@ -442,6 +442,10 @@ from `https://languagetool.org/#libreoffice`.
 
 Also make sure to add `nm-applet` to the `Session and Startup`
 else Wifi Icon, would not be visible.
+
+**IMPORTANT**: Also make Enable `Launch GNOME services on startup` in `Advance` Tab
+of the `Session and Startup`. This would allow the `ssh` and `gpg` services
+to have a nice Password GUI and maintain credentials over the session.
 
 ### 3. Fix Bluetooth tools
 We need to remove a few things first:
