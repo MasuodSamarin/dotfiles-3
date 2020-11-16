@@ -401,16 +401,16 @@ sudo pacman -R mousepad
 sudo pacman -R ristretto 
 ```
 ### 8. Configure the AUR download tool
-We would be using `rua` tool.
+We would be using `paru` tool.
 Here are its dependencies:
 ```shell {linenos=false}
-sudo pacman -S --needed git base-devel bubblewrap-suid xz shellcheck cargo
+sudo pacman -S --needed base-devel
 ```
 We would build it in the temporary location:
 ```shell
 cd /tmp
-git clone https://aur.archlinux.org/rua.git
-cd rua
+git clone https://aur.archlinux.org/paru.git
+cd paru
 makepkg -si
 ```
 You would be asked permission and `sudo` password entry for installation.
@@ -432,10 +432,10 @@ nmtui
 ```
 ### 2. Install the AUR Packages
 We need a few essential packages from AUR. We would be installing
-them using `rua` tool that we installed earlier.
+them using `paru` tool that we installed earlier.
 ```shell
-rua install xfce4-kbdleds-plugin
-rua install caffeine-ng
+paru xfce4-kbdleds-plugin
+paru caffeine-ng
 ```
 Additionally install the `languagetool` extention for LibreOffice
 from `https://languagetool.org/#libreoffice`.
@@ -452,9 +452,9 @@ sudo pacman -R bluez-rfcomm
 ```
 Next we install the AUR packages for the fixes:
 ```shell
-rua install bluez-rfcomm
-rua install bluez-hcitool
-rua install bluez-utils-compat
+paru bluez-rfcomm
+paru bluez-hcitool
+paru bluez-utils-compat
 ```
 
 ### 4. Install Driver for TP-Link Archer T9UH V2 USB dongle WiFi adaper
@@ -462,7 +462,7 @@ We need DKMS for this driver.
 ```shell
 sudo pacman -Syu
 sudo pacman -S dkms
-rua install rtl8814au-aircrack-dkms-git
+paru rtl8814au-aircrack-dkms-git
 ```
 More information about this from - 
 `https://aur.archlinux.org/rtl8814au-aircrack-dkms-git.git`
