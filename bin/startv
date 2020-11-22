@@ -1,0 +1,17 @@
+#!/bin/sh
+#                                                          -*- shell-script -*-
+#
+
+####
+##
+## Boseji's libvirtd Daemon Starter Script
+##
+## SPDX-License-Identifier: GPL-2.0-only
+##
+## Copyright (C) 2020 Abhijit Bose <boseji@users.noreply.github.com>
+##
+####
+
+sudo systemctl start libvirtd.service
+# Start the Network
+sudo virsh net-start br10
