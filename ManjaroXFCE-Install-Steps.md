@@ -65,8 +65,8 @@ pamac remove flatpak
 ## 5. Install Essentials Software
 
 ```shell
-# Password Manager and Secure Vault - seahorse for Linux Keyring
-sudo pacman -S keepassxc veracrypt seahorse
+# Password Manager and Secure Vault
+sudo pacman -S keepassxc veracrypt
 # My favorite Disk manager
 sudo pacman -S gnome-disk-utility
 # Backup Software for Projects
@@ -98,6 +98,8 @@ sudo pacman -S testdisk
 sudo pacman -S bleachbit
 # Remove the default Image Viewer
 pamac remove viewnior
+# For Linux Keyring (optional)
+sudo pacman -S seahorse
 ```
 
 ## 6. Fix User Permissions for Groups
