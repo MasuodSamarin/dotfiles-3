@@ -65,8 +65,8 @@ pamac remove flatpak
 ## 5. Install Essentials Software
 
 ```shell
-# Password Manager and Secure Vault
-sudo pacman -S keepassxc veracrypt
+# Password Manager and Secure Vault - seahorse for Linux Keyring
+sudo pacman -S keepassxc veracrypt seahorse
 # My favorite Disk manager
 sudo pacman -S gnome-disk-utility
 # Backup Software for Projects
