@@ -376,7 +376,7 @@ sudo pacman -S xorg xf86-input-libinput libinput xfce4 xfce4-goodies \
 ### 5. Enable Important Services
 Configure the GUI environment again using `systemd`:
 ```shell {linenos=false}
-sudo ufw enable
+sudo systemctl enable ufw
 sudo systemctl enable lightdm
 ```
 If you are using **SSD** for the install then you also need to enable
@@ -396,6 +396,20 @@ sudo pacman -S firefox lm_sensors keepassxc qpdfview pdfarranger zbar qtqr \
  hddtemp smartmontools tree patch tmux veracrypt htop hyphen-en libmythes \
  mythes-en gitg meld arch-audit gufw
 ```
+
+Additionally we would need some good fonts packages *(Nearly 1.5GB)*:
+```shell {linenos=false}
+sudo pacman -S ttf-droid gnu-free-fonts noto-fonts noto-fonts-extra \
+ ttf-caladea ttf-carlito ttf-cascadia-code ttf-cormorant ttf-croscore \
+ ttf-dejavu ttf-eurof ttf-fira-code ttf-fira-mono ttf-fira-sans \
+ ttf-hack ttf-inconsolata ttf-indic-otf ttf-ionicons ttf-jetbrains-mono \
+ ttf-junicode ttf-khmer ttf-lato ttf-joypixels ttf-ibm-plex ttf-hannom \
+ ttf-hanazono ttf-liberation ttf-linux-libertine ttf-linux-libertine-g \
+ ttf-monofur ttf-nerd-fonts-symbols ttf-opensans ttf-proggy-clean \
+ ttf-roboto ttf-roboto-mono ttf-sazanami ttf-tibetan-machine \
+ ttf-ubuntu-font-family ttf-font-awesome
+```
+
 ### 7. Remove some packages from XFCE group
 There are some utilies that overlap hence need to be removed.
 ```shell
@@ -438,6 +452,7 @@ them using `paru` tool that we installed earlier.
 ```shell
 paru xfce4-kbdleds-plugin
 paru caffeine-ng
+sudo ufw enable
 ```
 Additionally install the `languagetool` extention for LibreOffice
 from `https://languagetool.org/#libreoffice`.
