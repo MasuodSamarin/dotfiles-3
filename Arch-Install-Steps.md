@@ -98,7 +98,7 @@ internet to verify the time shown.
 ### 6. Configure the Repository Mirrors
 We would configure `https` mirrors for *3 countries* -
 **India**, **United States** and **Japan**; with maximum update age of 
-*6 Hours* and sorted by theri rate:
+*6 Hours* and sorted by their rate:
 ```shell {linenos=false}
 reflector --country 'United States',Japan,India --age 6 \
  --protocol https --sort rate --save /etc/pacman.d/mirrorlist

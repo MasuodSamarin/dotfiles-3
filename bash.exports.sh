@@ -62,3 +62,7 @@ fi
 # Adding GPG Command-line Validation
 export GPG_TTY=$(tty)
 
+
+# Adding Exports for Restic
+export RESTIC_PASSWORD_COMMAND="zenity --password"
+export RESTIC_REPOSITORY_FILE=$HOME/restic-repo.txt

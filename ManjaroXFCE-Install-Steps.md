@@ -67,8 +67,8 @@ pamac remove flatpak
 ```shell
 # Password Manager and Secure Vault
 sudo pacman -S keepassxc veracrypt
-# My favorite Disk manager
-sudo pacman -S gnome-disk-utility
+# My favorite Disk manager and Cleaner
+sudo pacman -S gnome-disk-utility bleachbit
 # Backup Software for Projects
 sudo pacman -S restic
 # Basic Editor for Text - gedit
@@ -100,6 +100,10 @@ sudo pacman -S bleachbit
 pamac remove viewnior
 # For Linux Keyring (optional)
 sudo pacman -S seahorse
+# For Scanning Files (optional)
+sudo pacman -S --needed simple-scan
+# For Writing Journals
+sudo pacman -S --needed rednotebook
 ```
 
 ## 6. Fix User Permissions for Groups
