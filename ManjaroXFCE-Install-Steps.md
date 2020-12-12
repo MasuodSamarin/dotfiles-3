@@ -83,7 +83,7 @@ sudo pacman -S smartmontools hddtemp
 sudo pacman -S docker
 # Source Manipulation and Much needed programming languages
 sudo pacman -S code gitg python-pygments go nodejs npm \
- nano-syntax-highlighting meld
+ nano-syntax-highlighting meld make patch
 # For Concatenating PDF files
 sudo pacman -S pdfarranger
 # Embedded Essentials
@@ -104,6 +104,16 @@ sudo pacman -S seahorse
 sudo pacman -S --needed simple-scan
 # For Writing Journals
 sudo pacman -S --needed rednotebook
+# A Good Calculator (optional)
+sudo pacman -S --needed speedcrunch
+# For STM32CubeMX IDE
+pamac install ncurses5-compat-libs
+# CHM File viewer
+sudo pacman -S --needed xchm
+# Install Linux Headers For Kernel - Select the correct Kernel Version
+sudo pacman -S --needed linux-headers make patch
+# Wireguard Kernel Module - For VPN
+sudo pacman -S --needed wireguard-dkms wireguard-tools
 ```
 
 ## 6. Fix User Permissions for Groups
