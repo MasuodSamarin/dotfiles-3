@@ -217,4 +217,12 @@ wttr ()
 # Temperature Display
 alias tsensor='watch -n 2 sensors'
 
+# Restic
+alias backup-home='cd ~ ; restic backup --exclude-file files-to-exclude.txt --files-from files-to-backup.txt ; cd -'
+
+# Bluetooth Restart
+alias bluetooth-restart='sudo rfkill block bluetooth && sudo rfkill unblock bluetoooth'
+
+# GPG Verify
+alias gpg-verify='gpg --keyserver-options auto-key-retrieve --keyserver $GPG_KEY_SERVER --verify'
 

@@ -25,8 +25,8 @@ export manjaro="$(cat /etc/issue | grep Manjaro)"
 
 ## Path Config
 export QT_QPA_PLATFORMTHEME="qt5ct"
-export EDITOR=/usr/bin/nano
-export VISUAL=/usr/bin/nano
+export EDITOR=/usr/bin/vim
+export VISUAL=/usr/bin/vim
 
 # Eagle
 export QT_XCB_GL_INTEGRATION=xcb_egl
@@ -61,8 +61,8 @@ fi
 
 # Adding GPG Command-line Validation
 export GPG_TTY=$(tty)
-
+export GPG_KEY_SERVER="pgp.mit.edu"
 
 # Adding Exports for Restic
-export RESTIC_PASSWORD_COMMAND="zenity --password"
+export PASSWORD_COMMAND="zenity --password"
 export RESTIC_REPOSITORY_FILE=$HOME/restic-repo.txt
